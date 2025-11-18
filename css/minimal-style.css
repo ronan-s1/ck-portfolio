@@ -443,7 +443,6 @@
     align-items: center;
     font-size: 0.85rem;
     letter-spacing: 0.1em;
-    color: var(--color-text-light);
     text-transform: uppercase;
 }
 
@@ -476,16 +475,24 @@
     margin-bottom: 2rem;
     cursor: pointer;
     position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+.masonry-item-image-wrapper {
+    position: relative;
+    overflow: hidden;
 }
 
 .masonry-item img {
     width: 100%;
     display: block;
+    opacity: 0;
     transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .masonry-item:hover img {
-    opacity: 0.9;
+    opacity: 1;
     transform: scale(1.02);
 }
 
@@ -516,6 +523,10 @@
 
 /* Touch device optimization - always show masonry info */
 @media (hover: none) and (pointer: coarse) {
+    .masonry-item img {
+        opacity: 1;
+    }
+    
     .masonry-item-overlay {
         opacity: 1 !important;
     }
@@ -899,6 +910,10 @@ img[loading="lazy"].loaded {
         margin-bottom: 1.5rem;
     }
     
+    .masonry-item img {
+        opacity: 1;
+    }
+    
     .masonry-item-overlay {
         margin-top: 0.75rem;
         opacity: 1 !important;
@@ -1021,6 +1036,10 @@ img[loading="lazy"].loaded {
     
     .masonry-item {
         margin-bottom: 1.25rem;
+    }
+    
+    .masonry-item img {
+        opacity: 1;
     }
     
     .masonry-item-overlay {

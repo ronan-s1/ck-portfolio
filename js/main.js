@@ -142,10 +142,12 @@ function renderMasonryGallery(items) {
     
     masonryGallery.innerHTML = items.map((item, index) => `
         <div class="masonry-item" data-index="${index}">
-            <img src="images/work/${item.filename}" 
-                 alt="${item.title}" 
-                 loading="lazy"
-                 onerror="this.src='images/work/placeholder.jpg'">
+            <div class="masonry-item-image-wrapper" style="background-color: ${item.colour || '#f0f0f0'};">
+                <img src="images/work/${item.filename}" 
+                     alt="${item.title}" 
+                     loading="lazy"
+                     onerror="this.src='images/work/placeholder.jpg'">
+            </div>
             <div class="masonry-item-overlay">
                 <h3>${item.title}</h3>
                 <p>${item.medium} - ${item.dimensions}</p>
