@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Helper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2A2A2A;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2A2A2A;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #D4845C;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .button {
+            background: #D4845C;
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .button:hover {
+            background: #C67449;
+        }
+        
+        .output {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .output.show {
+            display: block;
+        }
+        
+        .output h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #2A2A2A;
+        }
+        
+        pre {
+            background: #2A2A2A;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .copy-button {
+            background: #5C7D8C;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .copy-button:hover {
+            background: #4A6A77;
+        }
+        
+        .notice {
+            background: #fff3cd;
+            border: 1px solid #ffecb5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .notice strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gallery Image Helper Tool</h1>
+        <p class="subtitle">Fill in the details below to generate the JSON code for your artwork</p>
+        
+        <div class="notice">
+            <strong>Note:</strong> This tool helps you generate the JSON code you need to add to 
+            <code>gallery-data.json</code>. After generating, copy the code and paste it into your 
+            gallery-data.json file.
+        </div>
+        
+        <form id="imageForm">
+            <div class="form-group">
+                <label for="filename">Image Filename *</label>
+                <input type="text" id="filename" name="filename" 
+                       placeholder="e.g., summer.jpg" required>
+                <small style="color: #666; display: block; margin-top: 0.25rem;">
+                    Must match exactly with the file in images/gallery/ folder (including .jpg or .png)
+                </small>
+            </div>
+            
+            <div class="form-group">
+                <label for="title">Artwork Title *</label>
+                <input type="text" id="title" name="title" 
+                       placeholder="e.g., Summer" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="medium">Medium *</label>
+                <input type="text" id="medium" name="medium" 
+                       placeholder="e.g., Oil on canvas" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="dimensions">Dimensions *</label>
+                <input type="text" id="dimensions" name="dimensions" 
+                       placeholder="e.g., 35.5 x 45 cm" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea id="description" name="description" 
+                          placeholder="A brief description of the artwork..." required></textarea>
+            </div>
+            
+            <button type="submit" class="button">Generate JSON Code</button>
+        </form>
+        
+        <div id="output" class="output">
+            <h2>Generated JSON Code</h2>
+            <p style="margin-bottom: 1rem; color: #666;">
+                Copy this code and add it to your <code>gallery-data.json</code> file:
+            </p>
+            <pre id="jsonOutput"></pre>
+            <button type="button" class="copy-button" onclick="copyToClipboard()">
+                Copy to Clipboard
+            </button>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                <strong>Remember:</strong> If you're adding multiple images, separate each entry with a comma, 
+                but don't put a comma after the last one!
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('imageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const data = {
+                filename: document.getElementById('filename').value,
+                title: document.getElementById('title').value,
+                medium: document.getElementById('medium').value,
+                dimensions: document.getElementById('dimensions').value,
+                description: document.getElementById('description').value
+            };
+            
+            const json = JSON.stringify(data, null, 2);
+            document.getElementById('jsonOutput').textContent = json;
+            document.getElementById('output').classList.add('show');
+            
+            // Scroll to output
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+        
+        function copyToClipboard() {
+            const text = document.getElementById('jsonOutput').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const button = document.querySelector('.copy-button');
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy. Please select and copy manually.');
+            });
+        }
+    </script>
+</body>
+</html>
+

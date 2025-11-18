@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Clarissa Kelly - Irish-Filipino artist exploring identity through shadow and light in oil painting and drawing.">
+    <title>Clarissa Kelly</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/minimal-style.css">
+</head>
+<body class="minimal-body">
+    <!-- Minimal fixed nav -->
+    <nav class="minimal-nav">
+        <a href="index.html" class="minimal-logo"></a>
+        <div class="minimal-menu">
+            <a href="about.html">About</a>
+            <a href="work.html">Work</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <main class="minimal-main">
+        <!-- Large hero image section with parallax -->
+        <section class="image-hero" id="hero">
+            <div class="hero-image-large parallax-image">
+                <div class="animated-hero-bg">
+                    <div class="gradient-orb orb-1"></div>
+                    <div class="gradient-orb orb-2"></div>
+                    <div class="gradient-orb orb-3"></div>
+                </div>
+            </div>
+            <div class="hero-text-overlay fade-in-up">
+                <h1 class="split-text">Clarissa Kelly</h1>
+                <p class="fade-in-up-delay">Contemporary Painter</p>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- Abstract image grid with stagger animations -->
+        <section class="abstract-grid">
+            <div class="grid-item reveal-on-scroll" data-index="0">
+                <img src="images/work/something-we-share-ncad-works-2025-may-19-11-29-32-1500x.webp" alt="Something We Share" loading="lazy">
+                <div class="hover-info">
+                    <span>Something We Share</span>
+                </div>
+            </div>
+            <div class="grid-item reveal-on-scroll" data-index="1" style="animation-delay: 0.1s;">
+                <img src="images/work/bicycle-2025-may-19-11-29-55-1500x.webp" alt="Bicycle" loading="lazy">
+                <div class="hover-info">
+                    <span>Bicycle</span>
+                </div>
+            </div>
+            <div class="grid-item reveal-on-scroll" data-index="2" style="animation-delay: 0.2s;">
+                <img src="images/work/summer-ncad-works-2025-may-19-11-29-30-1500x.webp" alt="Summer" loading="lazy">
+                <div class="hover-info">
+                    <span>Summer</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simple statement with fade in -->
+        <!-- <section class="statement-minimal">
+            <div class="statement-content-minimal reveal-on-scroll">
+                <p>Exploring identity through the interplay of light and shadow</p>
+            </div>
+        </section> -->
+
+        <!-- Single line footer -->
+        <footer class="minimal-footer">
+            <span>© <span id="year"></span> Clarissa Kelly</span>
+            <div class="footer-links">
+                <a href="cv.html">CV</a>
+                <a href="contact.html">Get in touch</a>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/interactions.js"></script>
+</body>
+</html>

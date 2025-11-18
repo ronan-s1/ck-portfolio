@@ -1,0 +1,948 @@
+/* =====================================================
+   MINIMAL FINE ART PORTFOLIO STYLES
+   Simple, image-focused, abstract layouts
+   ===================================================== */
+
+/* Minimal body styling */
+.minimal-body {
+    background: #fafafa;
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   MINIMAL NAVIGATION
+   ===================================================== */
+.minimal-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: transparent;
+    transition: background 0.3s ease;
+}
+
+.minimal-nav.scrolled {
+    background: rgba(250, 250, 250, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.minimal-logo {
+    font-family: var(--font-primary);
+    font-size: 1.125rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--color-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.minimal-logo:hover {
+    color: #D4845C;
+}
+
+.minimal-menu {
+    display: flex;
+    gap: 3rem;
+}
+
+.minimal-menu a {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 300;
+    position: relative;
+    transition: opacity 0.3s ease;
+}
+
+.minimal-menu a:hover {
+    opacity: 0.5;
+}
+
+/* =====================================================
+   IMAGE HERO - Large featured image
+   ===================================================== */
+.image-hero {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-image-large {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+.hero-image-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+/* Animated Hero Background */
+.animated-hero-bg {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 50%, #f0f0f0 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    mix-blend-mode: multiply;
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #D4845C 0%, transparent 70%);
+    top: 20%;
+    left: 10%;
+    animation: float1 40s ease-in-out infinite;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #C9A68D 0%, transparent 70%);
+    bottom: 20%;
+    right: 15%;
+    animation: float2 50s ease-in-out infinite;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #A8937E 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: float3 45s ease-in-out infinite;
+}
+
+@keyframes float1 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(20px, -30px) scale(1.05);
+    }
+}
+
+@keyframes float2 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(-30px, 20px) scale(1.08);
+    }
+}
+
+@keyframes float3 {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+.hero-text-overlay {
+    position: absolute;
+    bottom: 5rem;
+    left: 3rem;
+    color: white;
+    z-index: 10;
+}
+
+.hero-text-overlay h1 {
+    font-size: 4rem;
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+
+.hero-text-overlay p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    font-style: italic;
+    color: #D4845C; /* Warm accent color */
+}
+
+/* Split text animation */
+.split-text .char {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade in with delay */
+.fade-in-up-delay {
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: #D4845C; /* Same warm accent color */
+    z-index: 10;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 40px;
+    background: #D4845C; /* Same warm accent color */
+    animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%, 100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scaleY(0.5);
+        opacity: 0.5;
+    }
+}
+
+/* =====================================================
+   ABSTRACT GRID - Non-standard layout
+   ===================================================== */
+.abstract-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    padding: 3rem;
+    background: white;
+}
+
+.grid-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: #f0f0f0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+
+.grid-item:hover img {
+    transform: scale(1.03);
+    opacity: 0.95;
+}
+
+/* Reveal on scroll animation */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Abstract grid item sizes - More balanced layout */
+.grid-item:nth-child(1) {
+    /* Something We Share - Large left */
+    grid-column: span 7;
+    grid-row: span 2;
+    min-height: 75vh;
+}
+
+.grid-item:nth-child(2) {
+    /* Bicycle - Top right */
+    grid-column: span 5;
+    min-height: 50vh;
+}
+
+.grid-item:nth-child(3) {
+    /* Summer - Bottom right */
+    grid-column: span 5;
+    min-height: calc(25vh - 0.75rem);
+}
+
+.grid-item:nth-child(4) {
+    /* Selfie - Full width bottom */
+    grid-column: span 12;
+    min-height: 55vh;
+}
+
+/* Hover info */
+.hover-info {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+
+.grid-item:hover .hover-info {
+    opacity: 1;
+}
+
+/* Show hover info on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .hover-info {
+        opacity: 1;
+        font-size: 1.25rem;
+        bottom: 1.5rem;
+        left: 1.5rem;
+    }
+}
+
+/* =====================================================
+   MINIMAL STATEMENT
+   ===================================================== */
+.statement-minimal {
+    padding: 10rem 3rem;
+    text-align: center;
+    background: white;
+}
+
+.statement-content-minimal {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.statement-content-minimal p {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
+    font-style: italic;
+}
+
+/* =====================================================
+   MINIMAL FOOTER
+   ===================================================== */
+.minimal-footer {
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.minimal-footer a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.minimal-footer a:hover {
+    color: #D4845C;
+}
+
+/* =====================================================
+   GALLERY PAGE - Masonry style
+   ===================================================== */
+.masonry-gallery {
+    padding: 8rem 3rem 5rem 3rem;
+    columns: 3;
+    column-gap: 2rem;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.masonry-item img {
+    width: 100%;
+    display: block;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.masonry-item:hover img {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+.masonry-item-overlay {
+    margin-top: 1rem;
+}
+
+.masonry-item-overlay p {
+    margin-top: -7px !important;
+}
+
+.masonry-item-overlay h3 {
+    font-family: var(--font-primary);
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-text);
+}
+
+.masonry-item-overlay p {
+    font-size: 0.9rem;
+    color: #D4845C;
+    margin: 0;
+}
+
+/* Touch device optimization - always show masonry info */
+@media (hover: none) and (pointer: coarse) {
+    .masonry-item-overlay h3 {
+        font-size: 1.1rem;
+    }
+    
+    .masonry-item-overlay p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Lazy load fade in */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+.masonry-caption {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.masonry-item:hover .masonry-caption {
+    opacity: 1;
+}
+
+/* =====================================================
+   ABOUT PAGE - Minimal layout
+   ===================================================== */
+.about-minimal {
+    padding: 10rem 3rem 5rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.about-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+.about-image-minimal {
+    position: sticky;
+    top: 8rem;
+}
+
+.about-image-minimal img {
+    width: 100%;
+    display: block;
+}
+
+.about-text-minimal {
+    font-size: 1.125rem;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+}
+
+.about-text-minimal h1 {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+.about-text-minimal p {
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* =====================================================
+   CV PAGE - Minimal list style
+   ===================================================== */
+.cv-minimal {
+    padding: 10rem 3rem 5rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.cv-minimal h1 {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+}
+
+.cv-section-minimal {
+    margin-bottom: 4rem;
+}
+
+.cv-section-minimal h2 {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: var(--color-text-light);
+}
+
+.cv-entry {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+}
+
+.cv-entry-left {
+    flex: 1;
+}
+
+.cv-entry-right {
+    font-family: var(--font-primary);
+    font-style: italic;
+    color: var(--color-text-light);
+}
+
+/* =====================================================
+   CONTACT PAGE - Minimal form
+   ===================================================== */
+.contact-minimal {
+    padding: 10rem 3rem 5rem 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact-minimal h1 {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+.contact-form-minimal {
+    margin-top: 3rem;
+}
+
+.contact-form-minimal input,
+.contact-form-minimal textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    background: transparent;
+    margin-bottom: 2rem;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form-minimal input:focus,
+.contact-form-minimal textarea:focus {
+    outline: none;
+    border-bottom-color: var(--color-text);
+}
+
+.contact-form-minimal textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.contact-form-minimal button {
+    background: var(--color-text);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.contact-form-minimal button:hover {
+    opacity: 0.8;
+}
+
+/* =====================================================
+   RESPONSIVE - Mobile
+   ===================================================== */
+@media (max-width: 968px) {
+    .minimal-nav {
+        padding: 1.5rem 2rem;
+    }
+    
+    .minimal-logo {
+        font-size: 1rem;
+    }
+    
+    .minimal-menu {
+        gap: 2rem;
+    }
+    
+    .minimal-menu a {
+        font-size: 0.85rem;
+    }
+    
+    .hero-text-overlay {
+        left: 2rem;
+        right: 2rem;
+        bottom: 4rem;
+    }
+    
+    .hero-text-overlay h1 {
+        font-size: 3rem;
+        letter-spacing: 0.1em;
+    }
+    
+    .hero-text-overlay p {
+        font-size: 1.25rem;
+    }
+    
+    /* Hide scroll indicator on tablets */
+    .scroll-indicator {
+        display: none;
+    }
+    
+    .abstract-grid {
+        grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        gap: 2rem;
+    }
+    
+    .grid-item,
+    .grid-item.large,
+    .grid-item.wide,
+    .grid-item.tall {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+        min-height: 50vh;
+    }
+    
+    .statement-minimal {
+        padding: 6rem 2rem;
+    }
+    
+    .statement-content-minimal p {
+        font-size: 1.75rem;
+    }
+    
+    .masonry-gallery {
+        columns: 2;
+        gap: 1.5rem;
+        padding: 6rem 2rem 3rem 2rem;
+    }
+    
+    .about-split {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .about-image-minimal {
+        position: relative;
+        top: 0;
+    }
+    
+    .about-minimal,
+    .cv-minimal,
+    .contact-minimal {
+        padding: 8rem 2rem 3rem 2rem;
+    }
+    
+    .minimal-footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .minimal-nav {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .minimal-logo {
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+    }
+    
+    .minimal-menu {
+        gap: 1.25rem;
+    }
+    
+    .minimal-menu a {
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+    }
+    
+    .hero-text-overlay {
+        left: 1.5rem;
+        right: 1.5rem;
+        bottom: 3rem;
+    }
+    
+    .hero-text-overlay h1 {
+        font-size: 2.25rem;
+        letter-spacing: 0.08em;
+        line-height: 1.1;
+    }
+    
+    .hero-text-overlay p {
+        font-size: 1.125rem;
+        margin-top: 0.75rem;
+    }
+    
+    /* Ensure scroll indicator is hidden on phones */
+    .scroll-indicator {
+        display: none !important;
+    }
+    
+    .abstract-grid {
+        padding: 2.5rem 1.5rem;
+        gap: 1.75rem;
+    }
+    
+    .grid-item {
+        min-height: 45vh;
+    }
+    
+    .statement-minimal {
+        padding: 5rem 1.5rem;
+    }
+    
+    .statement-content-minimal p {
+        font-size: 1.5rem;
+        line-height: 1.5;
+    }
+    
+    .masonry-gallery {
+        columns: 1;
+        gap: 1.5rem;
+        padding: 5rem 1.5rem 2rem 1.5rem;
+    }
+    
+    .about-minimal,
+    .cv-minimal,
+    .contact-minimal {
+        padding: 6rem 1.5rem 2rem 1.5rem;
+    }
+    
+    .about-text-minimal h1,
+    .cv-minimal h1,
+    .contact-minimal h1 {
+        font-size: 2.25rem;
+    }
+    
+    .about-text-minimal p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .cv-entry {
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .cv-entry-left,
+    .cv-entry-right {
+        font-size: 1rem;
+    }
+    
+    .contact-minimal p,
+    .contact-minimal a {
+        font-size: 1rem;
+    }
+    
+    .contact-form-minimal input,
+    .contact-form-minimal textarea,
+    .contact-form-minimal button {
+        font-size: 1rem;
+    }
+    
+    .minimal-footer {
+        padding: 2rem 1.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+    .minimal-nav {
+        padding: 1rem 1rem;
+    }
+    
+    .minimal-logo {
+        font-size: 0.8rem;
+    }
+    
+    .minimal-menu {
+        gap: 1rem;
+    }
+    
+    .minimal-menu a {
+        font-size: 0.7rem;
+    }
+    
+    .hero-text-overlay {
+        left: 1rem;
+        right: 1rem;
+        bottom: 2rem;
+    }
+    
+    .hero-text-overlay h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero-text-overlay p {
+        font-size: 1rem;
+    }
+    
+    .abstract-grid {
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+    }
+    
+    .grid-item {
+        min-height: 40vh;
+    }
+    
+    .statement-minimal {
+        padding: 4rem 1rem;
+    }
+    
+    .statement-content-minimal p {
+        font-size: 1.25rem;
+    }
+    
+    .about-text-minimal h1,
+    .cv-minimal h1,
+    .contact-minimal h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* =====================================================
+   SMOOTH SCROLLING & PAGE LOAD
+   ===================================================== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hide default scrollbar on hero */
+.image-hero::-webkit-scrollbar {
+    display: none;
+}
+
+/* Page load animation */
+body {
+    opacity: 0;
+    animation: pageLoad 0.6s ease-out forwards;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+@keyframes pageLoad {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, .grid-item, .masonry-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+

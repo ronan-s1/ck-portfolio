@@ -1,0 +1,265 @@
+/* Additional Artistic Enhancements */
+
+/* Artistic button hover effects */
+.cta-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-warm-light), var(--color-cool-light));
+    opacity: 0;
+    transition: opacity var(--transition-speed) var(--transition-ease);
+    z-index: -1;
+}
+
+.cta-button:hover::before {
+    opacity: 0.3;
+}
+
+/* Artistic text selection */
+::selection {
+    background: var(--color-accent);
+    color: white;
+}
+
+::-moz-selection {
+    background: var(--color-accent);
+    color: white;
+}
+
+/* Add artistic focus states */
+*:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+/* Artistic link hover effects */
+a {
+    position: relative;
+}
+
+main a:not(.button):not(.cta-button):not(.secondary-button):not(.logo):not(.nav-links a) {
+    background-image: linear-gradient(90deg, var(--color-warm), var(--color-cool));
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size var(--transition-speed) var(--transition-ease);
+}
+
+main a:not(.button):not(.cta-button):not(.secondary-button):not(.logo):not(.nav-links a):hover {
+    background-size: 100% 2px;
+}
+
+/* Artistic image loading effect */
+.image-container img {
+    opacity: 0;
+    animation: fadeInImage 0.6s ease-out forwards;
+}
+
+@keyframes fadeInImage {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Add artistic flourish to section transitions */
+section {
+    position: relative;
+}
+
+/* Artistic scrollbar (WebKit browsers) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-warm), var(--color-cool));
+    border-radius: 6px;
+    border: 2px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-warm-light), var(--color-cool-light));
+}
+
+/* Artistic gallery grid stagger effect */
+.gallery-item:nth-child(1) { animation-delay: 0.05s; }
+.gallery-item:nth-child(2) { animation-delay: 0.1s; }
+.gallery-item:nth-child(3) { animation-delay: 0.15s; }
+.gallery-item:nth-child(4) { animation-delay: 0.2s; }
+.gallery-item:nth-child(5) { animation-delay: 0.25s; }
+.gallery-item:nth-child(6) { animation-delay: 0.3s; }
+
+/* Enhanced shadow play on hover */
+.featured-item:nth-child(2):hover {
+    transform: translateY(-12px) rotate(1deg);
+}
+
+.featured-item:nth-child(3):hover {
+    transform: translateY(-12px) rotate(-1.5deg);
+}
+
+/* Artistic footer gradient */
+.main-footer {
+    background: linear-gradient(135deg, #1a1a1a, var(--color-text));
+}
+
+/* Add artistic corner accent to images */
+.image-container::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transition: opacity var(--transition-speed) var(--transition-ease);
+}
+
+.featured-item:hover .image-container::after,
+.gallery-item:hover .image-container::after {
+    opacity: 1;
+}
+
+/* Artistic loading state */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.image-container[data-loading="true"] {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #f8f8f8 50%,
+        #f0f0f0 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Artistic quote marks enhancement */
+.statement-quote::before,
+.statement-quote::after {
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+/* Add subtle parallax effect to hero */
+@media (prefers-reduced-motion: no-preference) {
+    .hero-content {
+        animation: subtleFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes subtleFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+}
+
+/* Artistic CV item borders */
+.cv-item {
+    position: relative;
+    padding-left: var(--spacing-sm);
+}
+
+.cv-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--color-accent), transparent);
+}
+
+/* Enhanced contact method cards */
+.contact-method {
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-method::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    transition: left 0.5s ease;
+}
+
+.contact-method:hover::before {
+    left: 100%;
+}
+
+/* Artistic form inputs */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(212, 132, 92, 0.1);
+}
+
+/* Add artistic depth to lightbox */
+.lightbox {
+    backdrop-filter: blur(10px);
+}
+
+.lightbox.active {
+    animation: lightboxFadeIn 0.4s ease-out;
+}
+
+@keyframes lightboxFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#lightbox-image {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    animation: imageZoomIn 0.4s ease-out;
+}
+
+@keyframes imageZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Artistic page transition hint */
+body {
+    animation: pageLoad 0.6s ease-out;
+}
+
+@keyframes pageLoad {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+

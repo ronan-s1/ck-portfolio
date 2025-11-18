@@ -1,0 +1,36 @@
+<svg width="800" height="1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7B9CAA;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#E6A883;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="1000" fill="#fcfcfc"/>
+  
+  <!-- Gradient overlay -->
+  <rect width="800" height="1000" fill="url(#grad4)"/>
+  
+  <!-- Portrait silhouette with shadow -->
+  <ellipse cx="400" cy="350" rx="150" ry="200" fill="none" stroke="#2A2A2A" stroke-width="2" opacity="0.2"/>
+  <circle cx="400" cy="250" r="80" fill="none" stroke="#2A2A2A" stroke-width="2" opacity="0.2"/>
+  
+  <!-- Shadow duplicate -->
+  <ellipse cx="415" cy="365" rx="150" ry="200" fill="none" stroke="#2A2A2A" stroke-width="1" opacity="0.1"/>
+  <circle cx="415" cy="265" r="80" fill="none" stroke="#2A2A2A" stroke-width="1" opacity="0.1"/>
+  
+  <!-- Center text -->
+  <text x="400" y="680" font-family="Georgia, serif" font-size="48" fill="#2A2A2A" text-anchor="middle" opacity="0.4">
+    Portrait Placeholder
+  </text>
+  <text x="400" y="730" font-family="Arial, sans-serif" font-size="20" fill="#666" text-anchor="middle" opacity="0.4">
+    Add your portrait or profile image
+  </text>
+  
+  <!-- Dimensions indicator -->
+  <text x="400" y="950" font-family="Arial, sans-serif" font-size="18" fill="#999" text-anchor="middle">
+    800 x 1000 px
+  </text>
+</svg>
+
