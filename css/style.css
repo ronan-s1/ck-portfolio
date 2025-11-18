@@ -918,12 +918,28 @@ main {
 
 /* Mobile lightbox controls - below image */
 @media (max-width: 968px) {
+    .lightbox {
+        align-items: flex-start;
+        padding: 0;
+    }
+    
     .lightbox-content {
         flex-direction: column;
         justify-content: flex-start;
-        padding: 2rem 1rem;
+        padding: 5rem 1rem 8rem 1rem;
         overflow-y: auto;
         overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100vh;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #lightbox-image {
+        max-height: 50vh;
+        max-width: 100%;
+        width: 100%;
+        object-fit: contain;
     }
     
     .lightbox-close {
@@ -957,6 +973,19 @@ main {
         position: relative;
         max-width: 100%;
         max-height: none;
+        overflow-y: visible;
+        padding-bottom: 2rem;
+    }
+    
+    .lightbox-caption h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .lightbox-caption p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
     }
 }
 
