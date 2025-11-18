@@ -816,7 +816,9 @@ main {
     max-height: 90vh;
     display: flex;
     gap: var(--spacing-md);
-    align-items: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #lightbox-image {
@@ -829,7 +831,10 @@ main {
 .lightbox-caption {
     color: var(--color-white);
     max-width: 300px;
+    max-height: 85vh;
     padding: var(--spacing-md);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .lightbox-caption h3 {
@@ -842,6 +847,31 @@ main {
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: var(--spacing-sm);
+}
+
+/* Custom scrollbar for lightbox caption */
+.lightbox-caption::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lightbox-caption::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.lightbox-caption::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.lightbox-caption::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Firefox scrollbar */
+.lightbox-caption {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
 }
 
 .lightbox-close,
@@ -892,6 +922,8 @@ main {
         flex-direction: column;
         justify-content: flex-start;
         padding: 2rem 1rem;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     
     .lightbox-close {
@@ -923,6 +955,8 @@ main {
     .lightbox-caption {
         margin-top: 1.5rem;
         position: relative;
+        max-width: 100%;
+        max-height: none;
     }
 }
 
@@ -1357,4 +1391,7 @@ main {
         background: white;
     }
 }
+
+
+
 
