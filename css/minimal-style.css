@@ -43,7 +43,7 @@
 }
 
 .minimal-logo:hover {
-    color: #D4845C;
+    color: #a42f40;
 }
 
 .minimal-menu {
@@ -59,11 +59,11 @@
     text-transform: uppercase;
     font-weight: 300;
     position: relative;
-    transition: opacity 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .minimal-menu a:hover {
-    opacity: 0.5;
+    color: #a42f40;
 }
 
 /* =====================================================
@@ -113,7 +113,7 @@
 .orb-1 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, #D4845C 0%, transparent 70%);
+    background: radial-gradient(circle, #a42f40 0%, transparent 70%);
     top: 20%;
     left: 10%;
     animation: float1 7.5s ease-in-out infinite;
@@ -143,7 +143,7 @@
     height: 450px;
     background: radial-gradient(circle, #8B7355 0%, transparent 70%);
     top: 70%;
-    left: 30%;
+    left: 10%;
     animation: float4 9s ease-in-out infinite;
 }
 
@@ -229,7 +229,7 @@
     font-weight: 300;
     letter-spacing: 0.08em;
     font-style: normal;
-    color: #D4845C; /* Warm accent color */
+    color: #a42f40; /* Warm accent color */
 }
 
 /* Split text animation */
@@ -272,7 +272,7 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    color: #D4845C; /* Same warm accent color */
+    color: #a42f40; /* Same warm accent color */
     z-index: 10;
     font-size: 0.75rem;
     letter-spacing: 0.2em;
@@ -284,7 +284,7 @@
 .scroll-line {
     width: 1px;
     height: 40px;
-    background: #D4845C; /* Same warm accent color */
+    background: #a42f40; /* Same warm accent color */
     animation: scrollPulse 2s ease-in-out infinite;
 }
 
@@ -446,6 +446,75 @@
     text-transform: uppercase;
 }
 
+/* =====================================================
+   BOOTSTRAP OFFCANVAS CUSTOMIZATION
+   ===================================================== */
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+    background: transparent;
+    position: relative;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 18px;
+}
+
+.hamburger-icon span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text);
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.offcanvas {
+    background-color: var(--color-bg);
+}
+
+.offcanvas-title {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text);
+}
+
+.offcanvas-body .nav-link {
+    font-family: var(--font-secondary);
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    padding: 1rem 0;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.offcanvas-body .nav-link:hover {
+    color: #a42f40;
+    padding-left: 1rem;
+}
+
+.btn-close {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
 .footer-links {
     display: flex;
     gap: 2rem;
@@ -458,7 +527,7 @@
 }
 
 .minimal-footer a:hover {
-    color: #D4845C;
+    color: #a42f40;
 }
 
 /* =====================================================
@@ -517,7 +586,7 @@
 
 .masonry-item-overlay p {
     font-size: 0.9rem;
-    color: #D4845C;
+    color: #a42f40;
     margin: 0;
 }
 
@@ -671,7 +740,7 @@ img[loading="lazy"].loaded {
 .cv-entry-right {
     font-family: var(--font-primary);
     font-style: italic;
-    color: var(--color-text-light);
+    color: #a42f40;
 }
 
 /* =====================================================

@@ -8,7 +8,7 @@
    ===================================================== */
 :root {
     /* Cultural Color Palette */
-    --color-warm: #D4845C; /* Filipino-inspired warm terracotta */
+    --color-warm: #a42f40; /* Filipino-inspired warm terracotta */
     --color-warm-light: #E6A883;
     --color-cool: #5C7D8C; /* Irish-inspired cool slate blue */
     --color-cool-light: #7B9CAA;
@@ -187,6 +187,10 @@ main {
     font-size: 0.95rem;
     letter-spacing: 0.5px;
     position: relative;
+}
+
+.nav-links a:hover {
+    color: #a42f40;
 }
 
 .nav-links a::after {
