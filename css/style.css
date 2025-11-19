@@ -834,7 +834,7 @@ main {
 
 .lightbox-caption {
     color: var(--color-white);
-    max-width: 300px;
+    max-width: 450px;
     max-height: 85vh;
     padding: var(--spacing-md);
     overflow-y: auto;
@@ -882,8 +882,8 @@ main {
 .lightbox-prev,
 .lightbox-next {
     position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    border: none;
     color: var(--color-white);
     font-size: 2rem;
     cursor: pointer;
@@ -893,14 +893,12 @@ main {
     align-items: center;
     justify-content: center;
     transition: all var(--transition-speed) var(--transition-ease);
-    backdrop-filter: blur(5px);
 }
 
 .lightbox-close:hover,
 .lightbox-prev:hover,
 .lightbox-next:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.8);
+    opacity: 0.7;
 }
 
 .lightbox-close {

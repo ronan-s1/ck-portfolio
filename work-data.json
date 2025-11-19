@@ -33,42 +33,26 @@
   },
   {
     "filename": "IMG_1001.jpeg",
-    "title": "Untitled",
-    "medium": "",
-    "dimensions": "",
-    "description": "",
-    "colour": "#a42f4085"
-  },
-  {
-    "filename": "IMG_1005.jpeg",
-    "title": "Untitled",
-    "medium": "",
-    "dimensions": "",
-    "description": "",
-    "colour": "#a42f4085"
-  },
-  {
-    "filename": "IMG_1006.jpeg",
-    "title": "Untitled",
-    "medium": "",
-    "dimensions": "",
-    "description": "",
-    "colour": "#a42f4085"
+    "title": "Work 1",
+    "medium": "Medium TBD",
+    "dimensions": "Dimensions TBD",
+    "description": "Description to be added.",
+    "colour": "#8b2e2985"
   },
   {
     "filename": "IMG_8220.jpeg",
-    "title": "Untitled",
-    "medium": "",
-    "dimensions": "",
-    "description": "",
-    "colour": "#a42f4085"
+    "title": "Work 2",
+    "medium": "Medium TBD",
+    "dimensions": "Dimensions TBD",
+    "description": "Description to be added.",
+    "colour": "#8d8ed385"
   },
   {
     "filename": "IMG_8221.jpeg",
-    "title": "Untitled",
-    "medium": "",
-    "dimensions": "",
-    "description": "",
-    "colour": "#a42f4085"
+    "title": "Work 3",
+    "medium": "Medium TBD",
+    "dimensions": "Dimensions TBD",
+    "description": "Description to be added.",
+    "colour": "#91536685"
   }
 ]
