@@ -5,7 +5,8 @@
 
 /* Minimal body styling — match nav: Inter / --font-secondary sitewide */
 .minimal-body {
-    background: #fafafa;
+    --minimal-page-bg: #fafafa;
+    background: var(--minimal-page-bg);
     overflow-x: hidden;
     font-family: var(--font-secondary);
 }
@@ -37,7 +38,7 @@
 }
 
 .minimal-nav.scrolled {
-    background: rgba(250, 250, 250, 0.95);
+    background: color-mix(in srgb, var(--minimal-page-bg) 95%, transparent);
     backdrop-filter: blur(10px);
 }
 
@@ -126,7 +127,7 @@
     padding: 6.75rem clamp(2.6rem, 10.25vw, 6.25rem) 0.75rem;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: #fff;
+    background-color: var(--minimal-page-bg);
 }
 
 .hero-image-large {
