@@ -11,7 +11,9 @@
 </head>
 <body class="minimal-body">
     <nav class="minimal-nav">
-        <a href="index.html" class="minimal-logo">Clarissa Kelly</a>
+        <a href="index.html" class="minimal-logo" aria-label="Clarissa Kelly">
+            <img class="minimal-logo-signature" src="images/home/ck.png" alt="" width="409" height="109" decoding="async">
+        </a>
         <!-- Hamburger menu for mobile -->
         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-label="Toggle navigation">
             <span class="hamburger-icon">
@@ -33,7 +35,9 @@
     <!-- Offcanvas Sidebar for Mobile -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavLabel">Clarissa Kelly</h5>
+            <h5 class="offcanvas-title offcanvas-title--signature" id="offcanvasNavLabel">
+                <img src="images/home/ck.png" alt="Clarissa Kelly" class="offcanvas-signature-mark" width="409" height="109" decoding="async">
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -49,117 +53,112 @@
 
     <main class="minimal-main">
         <section class="cv-minimal">
-            <h1>Curriculum Vitae</h1>
+            <h1>CV</h1>
 
             <div class="cv-section-minimal">
                 <h2>Contact</h2>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <a href="tel:0830277859" style="color: inherit;">0830277859</a> |
-                        <a href="mailto:Clarissakellyartist@gmail.com" style="color: inherit;">Clarissakellyartist@gmail.com</a> | 
-                        <a href="https://instagram.com/clarissakellyart" target="_blank" style="color: inherit;">@clarissakellyart</a>
+                <p class="cv-contact-line">
+                    <a href="mailto:Clarissakellyartist@gmail.com">Clarissakellyartist@gmail.com</a>
+                    <span class="cv-contact-sep"> | </span>
+                    <a href="https://instagram.com/clarissakellyart" target="_blank" rel="noopener noreferrer">@clarissakellyart</a>
+                </p>
+            </div>
+
+            <div class="cv-section-minimal">
+                <h2>Group Exhibitions</h2>
+                <div class="cv-year-block">
+                    <h3 class="cv-year-heading">2026</h3>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>Cross Pollinate</strong><br>
+                            Clancy Quay Studios, Dublin
+                        </div>
                     </div>
-                    <div class="cv-entry-right"></div>
+                </div>
+                <div class="cv-year-block">
+                    <h3 class="cv-year-heading">2025</h3>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>Clancy Quay Residents Works in Progress</strong><br>
+                            Clancy Quay Studios, Dublin
+                        </div>
+                    </div>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>A Dream Halved</strong><br>
+                            Temple Bar Medical Centre, Dublin
+                        </div>
+                    </div>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>NCAD WORKS</strong><br>
+                            National College of Art & Design, Dublin
+                        </div>
+                    </div>
+                </div>
+                <div class="cv-year-block">
+                    <h3 class="cv-year-heading">2024</h3>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>Polvere Di Stelline</strong><br>
+                            Accademia di Belle Arti di Palermo, Sicily
+                        </div>
+                    </div>
+                </div>
+                <div class="cv-year-block">
+                    <h3 class="cv-year-heading">2023</h3>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>Micro Studios Showcase</strong><br>
+                            National College of Art & Design, Dublin
+                        </div>
+                    </div>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>Threads of Change</strong><br>
+                            Irish Museum of Modern Art, Dublin
+                        </div>
+                    </div>
+                    <div class="cv-entry cv-entry--grouped">
+                        <div class="cv-entry-body">
+                            <strong>Nuair a Mhairimid</strong><br>
+                            Mountjoy Square, Dublin
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cv-section-minimal">
+                <h2>Awards, Residencies, and Commissions</h2>
+                <div class="cv-entry">
+                    <div class="cv-entry-year">2025 - 2026</div>
+                    <div class="cv-entry-body">
+                        <strong>Clancy Quay Studio Residency</strong>
+                    </div>
                 </div>
             </div>
 
             <div class="cv-section-minimal">
                 <h2>Education</h2>
                 <div class="cv-entry">
-                    <div class="cv-entry-left">
+                    <div class="cv-entry-year">2021 - 2025</div>
+                    <div class="cv-entry-body">
                         <strong>Bachelors of Fine Art</strong><br>
                         National College of Art and Design, Dublin
                     </div>
-                    <div class="cv-entry-right">2021 - 2025</div>
                 </div>
                 <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Erasmus Programme</strong><br>
+                    <div class="cv-entry-year">March - July 2024</div>
+                    <div class="cv-entry-body">
+                        <strong>Erasmus</strong><br>
                         Accademia di Belle Arti di Palermo, Sicily
                     </div>
-                    <div class="cv-entry-right">March - July 2024</div>
                 </div>
             </div>
 
             <div class="cv-section-minimal">
-                <h2>Exhibitions</h2>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>A Dream Halved</strong><br>
-                        Temple Bar Medical Centre, Dublin
-                    </div>
-                    <div class="cv-entry-right">June 2025</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>NCAD WORKS</strong><br>
-                        National College of Art & Design, Dublin
-                    </div>
-                    <div class="cv-entry-right">June 2025</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Polvere Di Stelline</strong><br>
-                        Academia di Belle Arti di Palermo, Sicily
-                    </div>
-                    <div class="cv-entry-right">May 2024</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Micro Studios Showcase</strong><br>
-                        National College of Art & Design, Dublin
-                    </div>
-                    <div class="cv-entry-right">December 2023</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Threads of Change</strong><br>
-                        Irish Museum of Modern Art, Dublin
-                    </div>
-                    <div class="cv-entry-right">April 2023</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Nuair a Mhairimid</strong><br>
-                        Mountjoy Square, Dublin
-                    </div>
-                    <div class="cv-entry-right">March 2023</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>NCAD First Year Student Exhibition</strong><br>
-                        National College of Art & Design, Dublin
-                    </div>
-                    <div class="cv-entry-right">May 2022</div>
-                </div>
-            </div>
-
-            <div class="cv-section-minimal">
-                <h2>Experience</h2>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Curatorial Experience</strong><br>
-                        NCAD & ABAPA Group Exhibitions<br>
-                        <span style="font-size: 0.95rem; color: #666;">Assisted in curatorial planning and installation for group exhibitions, gaining experience in layout, display and collaboration.</span>
-                    </div>
-                    <div class="cv-entry-right">2022 - 2025</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Market Based Art Sales</strong><br>
-                        Dublin<br>
-                        <span style="font-size: 0.95rem; color: #666;">Sold prints and original artworks at markets including the Tara Building Christmas Market. Engaging professionally with the public and developing a self-directed approach.</span>
-                    </div>
-                    <div class="cv-entry-right">December 2024</div>
-                </div>
-                <div class="cv-entry">
-                    <div class="cv-entry-left">
-                        <strong>Private Mural Commission</strong><br>
-                        Walkinstown, Dublin<br>
-                        <span style="font-size: 0.95rem; color: #666;">Exterior paint on concrete. Completed an outdoor mural for a client, adhering the concept and composition to their requests.</span>
-                    </div>
-                    <div class="cv-entry-right">August 2023</div>
-                </div>
+                <h2>Collections</h2>
+                <p class="cv-collections-text">My work is in the State Art Collection of Ireland OPW, <em>Summer</em>, 2025.</p>
             </div>
         </section>
     </main>

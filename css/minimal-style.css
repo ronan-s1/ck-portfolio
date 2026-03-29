@@ -3,10 +3,20 @@
    Simple, image-focused, abstract layouts
    ===================================================== */
 
-/* Minimal body styling */
+/* Minimal body styling — match nav: Inter / --font-secondary sitewide */
 .minimal-body {
     background: #fafafa;
     overflow-x: hidden;
+    font-family: var(--font-secondary);
+}
+
+.minimal-body h1,
+.minimal-body h2,
+.minimal-body h3,
+.minimal-body h4,
+.minimal-body h5,
+.minimal-body h6 {
+    font-family: var(--font-secondary);
 }
 
 /* =====================================================
@@ -32,7 +42,7 @@
 }
 
 .minimal-logo {
-    font-family: var(--font-primary);
+    font-family: var(--font-secondary);
     font-size: 1.125rem;
     font-weight: 300;
     letter-spacing: 0.15em;
@@ -46,12 +56,43 @@
     color: #a42f40;
 }
 
+.minimal-logo-signature {
+    display: block;
+    width: auto;
+    max-width: min(52vw, 14rem);
+    height: auto;
+    max-height: 1.85rem;
+    object-fit: contain;
+}
+
+@media (min-width: 768px) {
+    .minimal-logo-signature {
+        max-height: 2.35rem;
+        max-width: min(36vw, 17rem);
+    }
+}
+
+.offcanvas-title--signature {
+    margin-bottom: 0;
+    line-height: 0;
+}
+
+.offcanvas-signature-mark {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 3rem;
+    object-fit: contain;
+}
+
 .minimal-menu {
     display: flex;
     gap: 3rem;
 }
 
 .minimal-menu a {
+    font-family: var(--font-secondary);
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     color: var(--color-text);
@@ -72,164 +113,62 @@
 .image-hero {
     width: 100%;
     height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 6.75rem clamp(2.6rem, 10.25vw, 6.25rem) 0.75rem;
+    box-sizing: border-box;
     overflow: hidden;
+    background-color: #fff;
 }
 
 .hero-image-large {
     width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-image-large img {
+    position: absolute;
+    inset: 0;
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     transform: scale(1.1);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-}
-
-/* Animated Hero Background */
-.animated-hero-bg {
-    width: 100%;
-    height: 100%;
-    background: #f5f5f5;
-    position: relative;
-    overflow: hidden;
-}
-
-.gradient-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.4;
-    mix-blend-mode: multiply;
-}
-
-.orb-1 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #a42f40 0%, transparent 70%);
-    top: 20%;
-    left: 10%;
-    animation: float1 7.5s ease-in-out infinite;
-}
-
-.orb-2 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #C9A68D 0%, transparent 70%);
-    bottom: 20%;
-    right: 15%;
-    animation: float2 7.5s ease-in-out infinite;
-}
-
-.orb-3 {
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, #A8937E 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: float3 8.5s ease-in-out infinite;
-}
-
-.orb-4 {
-    width: 450px;
-    height: 450px;
-    background: radial-gradient(circle, #8B7355 0%, transparent 70%);
-    top: 70%;
-    left: 10%;
-    animation: float4 9s ease-in-out infinite;
-}
-
-@keyframes float1 {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(500px, -120px) scale(1.1);
-    }
-    50% {
-        transform: translate(700px, 80px) scale(1.15);
-    }
-    75% {
-        transform: translate(450px, 200px) scale(1.05);
-    }
-}
-
-@keyframes float2 {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(300px, 100px) scale(1.08);
-    }
-    50% {
-        transform: translate(200px, -150px) scale(1.2);
-    }
-    75% {
-        transform: translate(400px, 180px) scale(1.12);
-    }
-}
-
-@keyframes float3 {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    25% {
-        transform: translate(calc(-50% + 600px), calc(-50% - 150px)) scale(1.15);
-    }
-    50% {
-        transform: translate(calc(-50% + 400px), calc(-50% + 100px)) scale(1.3);
-    }
-    75% {
-        transform: translate(calc(-50% + 500px), calc(-50% + 180px)) scale(1.2);
-    }
-}
-
-@keyframes float4 {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(350px, -100px) scale(1.12);
-    }
-    50% {
-        transform: translate(550px, 150px) scale(1.25);
-    }
-    75% {
-        transform: translate(400px, -50px) scale(1.1);
-    }
 }
 
 .hero-text-overlay {
-    position: absolute;
-    bottom: 5rem;
-    left: 3rem;
-    color: white;
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 48rem;
+    text-align: center;
+    padding: 0.75rem 3rem 1.25rem;
+    color: var(--color-text);
     z-index: 10;
 }
 
-.hero-text-overlay h1 {
-    font-size: 4rem;
-    font-weight: 200;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    overflow: hidden;
+.hero-text-overlay .hero-signature-title {
+    margin: 0;
+    line-height: 0;
 }
 
-.hero-text-overlay p {
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    font-style: normal;
-    color: #a42f40; /* Warm accent color */
+.hero-signature-title img {
+    display: block;
+    margin-inline: auto;
+    height: auto;
+    max-width: min(90%, 22rem);
 }
 
 /* Split text animation */
@@ -378,7 +317,7 @@
     color: white;
     opacity: 0;
     transition: opacity 0.6s ease;
-    font-family: var(--font-primary);
+    font-family: var(--font-secondary);
     font-size: 1.5rem;
     letter-spacing: 0.05em;
     text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
@@ -424,7 +363,7 @@
 }
 
 .statement-content-minimal p {
-    font-family: var(--font-primary);
+    font-family: var(--font-secondary);
     font-size: 2.5rem;
     font-weight: 300;
     line-height: 1.6;
@@ -441,9 +380,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: var(--font-secondary);
     font-size: 0.85rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+}
+
+body.minimal-body .lightbox-caption h3,
+body.minimal-body .lightbox-caption p,
+body.minimal-body .lightbox-caption .lightbox-meta {
+    font-family: var(--font-secondary);
+}
+
+body.minimal-body .lightbox-meta {
+    margin: 1.25rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+body.minimal-body .lightbox-meta__line {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--color-white);
 }
 
 /* =====================================================
@@ -482,7 +442,7 @@
 }
 
 .offcanvas-title {
-    font-family: var(--font-primary);
+    font-family: var(--font-secondary);
     font-size: 1.5rem;
     font-weight: 300;
     letter-spacing: 0.15em;
@@ -531,81 +491,63 @@
 }
 
 /* =====================================================
-   GALLERY PAGE - Masonry style
+   WORK PAGE - Uniform grid gallery
    ===================================================== */
 .masonry-gallery {
     padding: 8rem 3rem 5rem 3rem;
-    columns: 3;
-    column-gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .masonry-item {
-    break-inside: avoid;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background: transparent;
+    display: flex;
+    flex-direction: column;
 }
 
 .masonry-item-image-wrapper {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: transparent;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.4s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .masonry-item:hover .masonry-item-image-wrapper {
+        box-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.05),
+            0 14px 28px rgba(0, 0, 0, 0.09),
+            0 18px 48px rgba(0, 0, 0, 0.06);
+    }
 }
 
 .masonry-item img {
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
     display: block;
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.masonry-item:hover img {
+    object-fit: cover;
+    object-position: center;
     opacity: 1;
-    transform: scale(1.02);
+    transition: opacity 0.5s ease;
 }
 
-.masonry-item-overlay {
-    margin-top: 1rem;
-    opacity: 1;
-    display: block;
-}
-
-.masonry-item-overlay p {
-    margin-top: -7px !important;
-}
-
-.masonry-item-overlay h3 {
-    font-family: var(--font-primary);
-    font-size: 1.25rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    margin: 0 0 0.5rem 0;
-    color: var(--color-text);
-}
-
-.masonry-item-overlay p {
-    font-size: 0.9rem;
-    color: #a42f40;
-    margin: 0;
-}
-
-/* Touch device optimization - always show masonry info */
+/* Touch device optimization */
 @media (hover: none) and (pointer: coarse) {
     .masonry-item img {
         opacity: 1;
-    }
-    
-    .masonry-item-overlay {
-        opacity: 1 !important;
-    }
-    
-    .masonry-item-overlay h3 {
-        font-size: 1.1rem;
-    }
-    
-    .masonry-item-overlay p {
-        font-size: 0.85rem;
     }
     
     /* Ensure hover info is always visible on touch devices */
@@ -627,6 +569,11 @@ img[loading="lazy"].loaded {
     opacity: 1;
 }
 
+/* Work grid: show images immediately (no interactions.js .loaded on work.html) */
+.masonry-gallery .masonry-item img[loading="lazy"] {
+    opacity: 1;
+}
+
 .masonry-caption {
     position: absolute;
     bottom: 1rem;
@@ -642,13 +589,6 @@ img[loading="lazy"].loaded {
 
 .masonry-item:hover .masonry-caption {
     opacity: 1;
-}
-
-/* Always show overlay on mobile and touch devices */
-@media (max-width: 640px) {
-    .masonry-item-overlay {
-        opacity: 1 !important;
-    }
 }
 
 /* =====================================================
@@ -726,21 +666,70 @@ img[loading="lazy"].loaded {
     color: var(--color-text-light);
 }
 
+.cv-contact-line {
+    margin: 0;
+    font-size: 1.125rem;
+}
+
+.cv-contact-line a {
+    color: inherit;
+}
+
 .cv-entry {
-    display: flex;
-    justify-content: space-between;
+    display: block;
     margin-bottom: 2rem;
     font-size: 1.125rem;
 }
 
-.cv-entry-left {
-    flex: 1;
-}
-
-.cv-entry-right {
-    font-family: var(--font-primary);
+.cv-entry-year {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.4rem 0;
+    font-family: var(--font-secondary);
     font-style: italic;
     color: #a42f40;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+}
+
+.cv-entry-body {
+    display: block;
+    width: 100%;
+}
+
+.cv-year-block {
+    margin-bottom: 2.75rem;
+}
+
+.cv-year-block:last-child {
+    margin-bottom: 0;
+}
+
+.cv-year-heading {
+    font-size: 0.95rem;
+    font-weight: 400;
+    font-family: var(--font-secondary);
+    font-style: italic;
+    color: #a42f40;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    margin: 0 0 1rem 0;
+    text-transform: none;
+}
+
+.cv-year-block .cv-entry--grouped {
+    margin-bottom: 1.35rem;
+}
+
+.cv-year-block .cv-entry--grouped:last-child {
+    margin-bottom: 0;
+}
+
+.cv-collections-text {
+    margin: 0;
+    font-size: 1.125rem;
+    max-width: 40rem;
 }
 
 /* =====================================================
@@ -816,6 +805,14 @@ img[loading="lazy"].loaded {
         font-size: 1rem;
     }
     
+    .minimal-logo-signature {
+        max-height: 1.7rem;
+    }
+    
+    .offcanvas-signature-mark {
+        max-height: 2.75rem;
+    }
+    
     .minimal-menu {
         gap: 2rem;
     }
@@ -824,19 +821,16 @@ img[loading="lazy"].loaded {
         font-size: 0.85rem;
     }
     
+    .image-hero {
+        padding: 6.25rem clamp(2rem, 8.6vw, 4.25rem) 0.65rem;
+    }
+    
     .hero-text-overlay {
-        left: 2rem;
-        right: 2rem;
-        bottom: 4rem;
+        padding: 0.65rem 2rem 1.15rem;
     }
     
-    .hero-text-overlay h1 {
-        font-size: 3rem;
-        letter-spacing: 0.1em;
-    }
-    
-    .hero-text-overlay p {
-        font-size: 1.25rem;
+    .hero-signature-title img {
+        max-width: min(90%, 16.5rem);
     }
     
     /* Hide scroll indicator on tablets */
@@ -868,14 +862,9 @@ img[loading="lazy"].loaded {
     }
     
     .masonry-gallery {
-        columns: 2;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
         padding: 6rem 2rem 3rem 2rem;
-    }
-    
-    .masonry-item-overlay {
-        opacity: 1 !important;
-        display: block !important;
     }
     
     .about-split {
@@ -912,6 +901,14 @@ img[loading="lazy"].loaded {
         letter-spacing: 0.1em;
     }
     
+    .minimal-logo-signature {
+        max-height: 1.55rem;
+    }
+    
+    .offcanvas-signature-mark {
+        max-height: 2.5rem;
+    }
+    
     .minimal-menu {
         gap: 1.25rem;
     }
@@ -921,21 +918,16 @@ img[loading="lazy"].loaded {
         letter-spacing: 0.15em;
     }
     
+    .image-hero {
+        padding: 5.65rem clamp(1.55rem, 7.4vw, 3.15rem) 0.5rem;
+    }
+    
     .hero-text-overlay {
-        left: 1.5rem;
-        right: 1.5rem;
-        bottom: 3rem;
+        padding: 0.5rem 1.5rem 1rem;
     }
     
-    .hero-text-overlay h1 {
-        font-size: 2.25rem;
-        letter-spacing: 0.08em;
-        line-height: 1.1;
-    }
-    
-    .hero-text-overlay p {
-        font-size: 1.125rem;
-        margin-top: 0.75rem;
+    .hero-signature-title img {
+        max-width: min(92%, 12.5rem);
     }
     
     /* Ensure scroll indicator is hidden on phones */
@@ -970,31 +962,13 @@ img[loading="lazy"].loaded {
     }
     
     .masonry-gallery {
-        columns: 1;
+        grid-template-columns: 1fr;
         gap: 1.5rem;
         padding: 5rem 1.5rem 2rem 1.5rem;
     }
     
-    .masonry-item {
-        margin-bottom: 1.5rem;
-    }
-    
     .masonry-item img {
         opacity: 1;
-    }
-    
-    .masonry-item-overlay {
-        margin-top: 0.75rem;
-        opacity: 1 !important;
-    }
-    
-    .masonry-item-overlay h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.35rem;
-    }
-    
-    .masonry-item-overlay p {
-        font-size: 0.875rem;
     }
     
     .about-minimal,
@@ -1015,13 +989,19 @@ img[loading="lazy"].loaded {
     }
     
     .cv-entry {
-        flex-direction: column;
-        gap: 0.5rem;
         font-size: 1rem;
     }
-    
-    .cv-entry-left,
-    .cv-entry-right {
+
+    .cv-entry-year {
+        font-size: 0.9rem;
+    }
+
+    .cv-year-heading {
+        font-size: 0.9rem;
+    }
+
+    .cv-contact-line,
+    .cv-collections-text {
         font-size: 1rem;
     }
     
@@ -1052,6 +1032,14 @@ img[loading="lazy"].loaded {
         font-size: 0.8rem;
     }
     
+    .minimal-logo-signature {
+        max-height: 1.4rem;
+    }
+    
+    .offcanvas-signature-mark {
+        max-height: 2.35rem;
+    }
+    
     .minimal-menu {
         gap: 1rem;
     }
@@ -1060,18 +1048,16 @@ img[loading="lazy"].loaded {
         font-size: 0.7rem;
     }
     
+    .image-hero {
+        padding: 5.15rem clamp(1.25rem, 6.3vw, 2.6rem) 0.4rem;
+    }
+    
     .hero-text-overlay {
-        left: 1rem;
-        right: 1rem;
-        bottom: 2rem;
+        padding: 0.4rem 1rem 0.85rem;
     }
     
-    .hero-text-overlay h1 {
-        font-size: 1.75rem;
-    }
-    
-    .hero-text-overlay p {
-        font-size: 1rem;
+    .hero-signature-title img {
+        max-width: min(94%, 9.75rem);
     }
     
     .abstract-grid {
@@ -1103,25 +1089,8 @@ img[loading="lazy"].loaded {
         padding: 4rem 1rem 2rem 1rem;
     }
     
-    .masonry-item {
-        margin-bottom: 1.25rem;
-    }
-    
     .masonry-item img {
         opacity: 1;
-    }
-    
-    .masonry-item-overlay {
-        margin-top: 0.5rem;
-        opacity: 1 !important;
-    }
-    
-    .masonry-item-overlay h3 {
-        font-size: 1rem;
-    }
-    
-    .masonry-item-overlay p {
-        font-size: 0.8rem;
     }
     
     .about-text-minimal h1,

@@ -11,7 +11,9 @@
 </head>
 <body class="minimal-body">
     <nav class="minimal-nav">
-        <a href="index.html" class="minimal-logo">Clarissa Kelly</a>
+        <a href="index.html" class="minimal-logo" aria-label="Clarissa Kelly">
+            <img class="minimal-logo-signature" src="images/home/ck.png" alt="" width="409" height="109" decoding="async">
+        </a>
         <!-- Hamburger menu for mobile -->
         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-label="Toggle navigation">
             <span class="hamburger-icon">
@@ -33,7 +35,9 @@
     <!-- Offcanvas Sidebar for Mobile -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavLabel">Clarissa Kelly</h5>
+            <h5 class="offcanvas-title offcanvas-title--signature" id="offcanvasNavLabel">
+                <img src="images/home/ck.png" alt="Clarissa Kelly" class="offcanvas-signature-mark" width="409" height="109" decoding="async">
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -71,8 +75,12 @@
             <img id="lightbox-image" src="" alt="">
             <div class="lightbox-caption">
                 <h3 id="lightbox-title"></h3>
-                <p id="lightbox-info"></p>
-                <p id="lightbox-description"></p>
+                <div class="lightbox-meta">
+                    <p id="lightbox-year" class="lightbox-meta__line"></p>
+                    <p id="lightbox-medium" class="lightbox-meta__line"></p>
+                    <p id="lightbox-dim-cm" class="lightbox-meta__line"></p>
+                    <p id="lightbox-dim-in" class="lightbox-meta__line"></p>
+                </div>
             </div>
         </div>
     </div>

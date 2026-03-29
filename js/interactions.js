@@ -55,47 +55,6 @@ document.querySelectorAll('a, button, .grid-item, .masonry-item').forEach(el => 
 });
 
 // =====================================================
-// Hero Parallax Effect
-// =====================================================
-const hero = document.getElementById('hero');
-const heroImg = document.getElementById('hero-img');
-
-if (hero && heroImg) {
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const heroHeight = hero.offsetHeight;
-        
-        if (scrolled < heroHeight) {
-            // Parallax scroll effect only
-            heroImg.style.transform = `translateY(${scrolled * 0.5}px) scale(1.1)`;
-        }
-    });
-}
-
-// =====================================================
-// Mouse Movement Parallax on Hero
-// =====================================================
-if (hero) {
-    hero.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
-        const { offsetWidth, offsetHeight } = hero;
-        
-        const xPos = (clientX / offsetWidth - 0.5) * 30;
-        const yPos = (clientY / offsetHeight - 0.5) * 30;
-        
-        if (heroImg) {
-            heroImg.style.transform = `translate(${xPos}px, ${yPos}px) scale(1.1)`;
-        }
-    });
-    
-    hero.addEventListener('mouseleave', () => {
-        if (heroImg) {
-            heroImg.style.transform = 'translate(0, 0) scale(1.1)';
-        }
-    });
-}
-
-// =====================================================
 // Grid Item Hover Effect (no tilt)
 // =====================================================
 document.querySelectorAll('.grid-item').forEach(item => {
@@ -201,25 +160,6 @@ const imageObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('img[loading="lazy"]').forEach(img => {
     imageObserver.observe(img);
-});
-
-// =====================================================
-// Masonry Item Hover Effect (for work page)
-// =====================================================
-document.querySelectorAll('.masonry-item').forEach(item => {
-    const img = item.querySelector('img');
-    
-    item.addEventListener('mouseenter', () => {
-        if (img) {
-            img.style.transform = 'scale(1.05)';
-        }
-    });
-    
-    item.addEventListener('mouseleave', () => {
-        if (img) {
-            img.style.transform = 'scale(1)';
-        }
-    });
 });
 
 // =====================================================

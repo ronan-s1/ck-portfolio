@@ -80,35 +80,56 @@ async function initGallery() {
     
     if (!galleryGrid && !masonryGallery) return;
     
+    const showGalleryError = (detail) => {
+        const target = galleryGrid || masonryGallery;
+        if (!target) return;
+        const fileHint =
+            window.location.protocol === 'file:'
+                ? `<p style="color: #a42f40; font-size: 1rem; margin-top: 1rem;">This page was opened as a file (file://). Start a local server in the project folder, e.g. <code>python3 -m http.server 8080</code>, then open <code>http://localhost:8080/work.html</code> so the browser can load <code>work-data.json</code>.</p>`
+                : '';
+        const safe = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        target.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 3rem; max-width: 36rem; margin: 0 auto;">
+                    <p style="color: #666; font-size: 1.1rem;">
+                        Could not load the gallery. Check that <code>work-data.json</code> is present, and every <code>filename</code> matches a file in <code>images/work/</code>.
+                    </p>
+                    ${fileHint}
+                    <p style="color: #999; font-size: 0.95rem; margin-top: 1rem;">${safe(detail)}</p>
+                </div>
+            `;
+    };
+
     try {
         const response = await fetch('work-data.json');
+        if (!response.ok) {
+            throw new Error('work-data.json returned HTTP ' + response.status);
+        }
         galleryData = await response.json();
-        
+
+        if (!Array.isArray(galleryData) || galleryData.length === 0) {
+            showGalleryError('Gallery list is empty.');
+            return;
+        }
+
         if (galleryGrid) {
             renderGallery(galleryData);
         }
-        
+
         if (masonryGallery) {
             renderMasonryGallery(galleryData);
         }
     } catch (error) {
         console.error('Error loading gallery data:', error);
-        // Show placeholder message if JSON fails to load
-        const target = galleryGrid || masonryGallery;
-        if (target) {
-            target.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
-                    <p style="color: #666; font-size: 1.1rem;">
-                        Gallery images will appear here once you add them to the <code>images/work/</code> 
-                        folder and update <code>work-data.json</code>.
-                    </p>
-                    <p style="color: #999; font-size: 0.95rem; margin-top: 1rem;">
-                        See the README file for instructions on adding images.
-                    </p>
-                </div>
-            `;
-        }
+        showGalleryError(error.message || '');
     }
+}
+
+function workItemDimensionsCm(item) {
+    return item.dimensions_cm || item.dimensions || 'TBD';
+}
+
+function workItemDimensionsIn(item) {
+    return item.dimensions_in || 'TBD';
 }
 
 function renderGallery(items) {
@@ -116,7 +137,9 @@ function renderGallery(items) {
     
     if (!galleryGrid || items.length === 0) return;
     
-    galleryGrid.innerHTML = items.map((item, index) => `
+    galleryGrid.innerHTML = items.map((item, index) => {
+        const metaLine = [item.year, item.medium, workItemDimensionsCm(item)].filter(Boolean).join(' · ');
+        return `
         <div class="gallery-item" data-index="${index}" data-aos="fade-up" data-aos-delay="${index * 50}">
             <div class="image-container">
                 <img src="images/work/${item.filename}" 
@@ -126,10 +149,11 @@ function renderGallery(items) {
             </div>
             <div class="gallery-item-overlay">
                 <h3 class="gallery-item-title">${item.title}</h3>
-                <p class="gallery-item-info">${item.medium} - ${item.dimensions}</p>
+                <p class="gallery-item-info">${metaLine}</p>
             </div>
         </div>
-    `).join('');
+    `;
+    }).join('');
     
     // Re-initialize scroll animations for new elements
     initScrollAnimations();
@@ -142,15 +166,11 @@ function renderMasonryGallery(items) {
     
     masonryGallery.innerHTML = items.map((item, index) => `
         <div class="masonry-item" data-index="${index}">
-            <div class="masonry-item-image-wrapper" style="background-color: ${item.colour || '#f0f0f0'};">
+            <div class="masonry-item-image-wrapper">
                 <img src="images/work/${item.filename}" 
                      alt="${item.title}" 
                      loading="lazy"
                      onerror="this.src='images/work/placeholder.jpg'">
-            </div>
-            <div class="masonry-item-overlay">
-                <h3>${item.title}</h3>
-                <p>${item.medium} - ${item.dimensions}</p>
             </div>
         </div>
     `).join('');
@@ -276,8 +296,10 @@ function updateLightboxImage(index) {
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
     const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxInfo = document.getElementById('lightbox-info');
-    const lightboxDescription = document.getElementById('lightbox-description');
+    const lightboxYear = document.getElementById('lightbox-year');
+    const lightboxMedium = document.getElementById('lightbox-medium');
+    const lightboxDimCm = document.getElementById('lightbox-dim-cm');
+    const lightboxDimIn = document.getElementById('lightbox-dim-in');
     
     // Set lightbox background color based on item's colour field
     if (lightbox && item.colour) {
@@ -299,9 +321,11 @@ function updateLightboxImage(index) {
         };
     }
     
-    if (lightboxTitle) lightboxTitle.textContent = item.title;
-    if (lightboxInfo) lightboxInfo.textContent = `${item.medium} - ${item.dimensions}`;
-    if (lightboxDescription) lightboxDescription.textContent = item.description;
+    if (lightboxTitle) lightboxTitle.textContent = item.title || '';
+    if (lightboxYear) lightboxYear.textContent = item.year != null && item.year !== '' ? String(item.year) : 'TBD';
+    if (lightboxMedium) lightboxMedium.textContent = item.medium || 'TBD';
+    if (lightboxDimCm) lightboxDimCm.textContent = workItemDimensionsCm(item);
+    if (lightboxDimIn) lightboxDimIn.textContent = workItemDimensionsIn(item);
 }
 
 // =====================================================
