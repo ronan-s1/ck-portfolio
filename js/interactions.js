@@ -163,7 +163,7 @@ document.querySelectorAll('img[loading="lazy"]').forEach(img => {
 });
 
 // =====================================================
-// Page Load Animation
+c// Page Load Animation
 // =====================================================
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
