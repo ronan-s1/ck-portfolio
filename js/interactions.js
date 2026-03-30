@@ -2,6 +2,15 @@
 // INTERACTIVE ANIMATIONS & EFFECTS
 // =====================================================
 
+(function () {
+    if (
+        document.getElementById('hero-img') &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+        document.documentElement.classList.add('hero-animate-home');
+    }
+})();
+
 // Custom Cursor
 // =====================================================
 const cursor = document.querySelector('.custom-cursor');
@@ -163,7 +172,41 @@ document.querySelectorAll('img[loading="lazy"]').forEach(img => {
 });
 
 // =====================================================
-c// Page Load Animation
+// Home hero — reveal painting + signature when image has loaded
+// =====================================================
+(function initHomeHeroReveal() {
+    const heroSection = document.querySelector('.image-hero');
+    const heroImg = document.getElementById('hero-img');
+    if (!heroSection || !heroImg) return;
+
+    const markReady = () => {
+        heroSection.classList.add('hero-enter');
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        markReady();
+        return;
+    }
+
+    const fallbackMs = 9000;
+    const fallbackId = window.setTimeout(markReady, fallbackMs);
+
+    const onReady = () => {
+        window.clearTimeout(fallbackId);
+        requestAnimationFrame(markReady);
+    };
+
+    if (heroImg.complete && heroImg.naturalWidth > 0) {
+        window.clearTimeout(fallbackId);
+        requestAnimationFrame(markReady);
+    } else {
+        heroImg.addEventListener('load', onReady, { once: true });
+        heroImg.addEventListener('error', onReady, { once: true });
+    }
+})();
+
+// =====================================================
+// Page Load Animation
 // =====================================================
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
