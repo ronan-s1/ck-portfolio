@@ -538,16 +538,61 @@ body.minimal-body .lightbox-meta__line {
 }
 
 /* =====================================================
+   WORK PAGE - Year filter
+   ===================================================== */
+.work-year-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem 2.5rem;
+    padding: 7.5rem 3rem 0;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.year-filter-btn {
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-light, #666);
+    background: none;
+    border: none;
+    border-bottom: 1.5px solid transparent;
+    padding: 0.35rem 0;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.year-filter-btn:hover {
+    color: #a42f40;
+}
+
+.year-filter-btn.active {
+    color: var(--color-text, #2a2a2a);
+    border-bottom-color: #a42f40;
+}
+
+/* =====================================================
    WORK PAGE - Uniform grid gallery
    ===================================================== */
 .masonry-gallery {
-    padding: 8rem 3rem 5rem 3rem;
+    padding: 2.5rem 3rem 5rem 3rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+.masonry-gallery.gallery-fade-out {
+    opacity: 0;
+    transition: opacity 0.25s ease;
 }
 
 .masonry-item {
@@ -686,7 +731,7 @@ img[loading="lazy"].loaded {
    ===================================================== */
 .cv-minimal {
     padding: 10rem 3rem 5rem 3rem;
-    max-width: 900px;
+    max-width: 550px;
     margin: 0 auto;
 }
 
@@ -732,7 +777,7 @@ img[loading="lazy"].loaded {
     margin: 0 0 0.4rem 0;
     font-family: var(--font-secondary);
     font-style: italic;
-    color: #a42f40;
+    color: #6b6b6b;
     font-size: 0.95rem;
     letter-spacing: 0.02em;
     line-height: 1.3;
@@ -756,7 +801,7 @@ img[loading="lazy"].loaded {
     font-weight: 400;
     font-family: var(--font-secondary);
     font-style: italic;
-    color: #a42f40;
+    color: #6b6b6b;
     letter-spacing: 0.02em;
     line-height: 1.3;
     margin: 0 0 1rem 0;
@@ -782,7 +827,7 @@ img[loading="lazy"].loaded {
    ===================================================== */
 .contact-minimal {
     padding: 10rem 3rem 5rem 3rem;
-    max-width: 700px;
+    max-width: 550px;
     margin: 0 auto;
 }
 
@@ -906,10 +951,17 @@ img[loading="lazy"].loaded {
         font-size: 1.75rem;
     }
     
+    .work-year-filter {
+        padding-top: 5.5rem;
+        gap: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
     .masonry-gallery {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
-        padding: 6rem 2rem 3rem 2rem;
+        padding: 2rem 2rem 3rem 2rem;
     }
     
     .about-split {
@@ -1006,10 +1058,22 @@ img[loading="lazy"].loaded {
         line-height: 1.5;
     }
     
+    .work-year-filter {
+        padding-top: 4.5rem;
+        gap: 1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .year-filter-btn {
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+    }
+
     .masonry-gallery {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        padding: 5rem 1.5rem 2rem 1.5rem;
+        padding: 1.5rem 1.5rem 2rem 1.5rem;
     }
     
     .masonry-item img {
@@ -1130,8 +1194,19 @@ img[loading="lazy"].loaded {
         font-size: 1.25rem;
     }
     
+    .work-year-filter {
+        padding-top: 4rem;
+        gap: 1.25rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .year-filter-btn {
+        font-size: 0.72rem;
+    }
+
     .masonry-gallery {
-        padding: 4rem 1rem 2rem 1rem;
+        padding: 1.25rem 1rem 2rem 1rem;
     }
     
     .masonry-item img {

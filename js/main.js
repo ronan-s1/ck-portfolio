@@ -73,6 +73,8 @@ function initScrollAnimations() {
 // Gallery - Load images from JSON
 // =====================================================
 let galleryData = [];
+let activeFilteredData = [];
+let activeYear = 'all';
 
 async function initGallery() {
     const galleryGrid = document.getElementById('gallery-grid');
@@ -116,12 +118,57 @@ async function initGallery() {
         }
 
         if (masonryGallery) {
+            renderYearFilter(galleryData);
+            activeFilteredData = galleryData;
             renderMasonryGallery(galleryData);
         }
     } catch (error) {
         console.error('Error loading gallery data:', error);
         showGalleryError(error.message || '');
     }
+}
+
+function renderYearFilter(items) {
+    const filterContainer = document.getElementById('work-year-filter');
+    if (!filterContainer) return;
+
+    const years = [...new Set(items.map(item => item.year))].sort((a, b) => b - a);
+
+    const buttons = ['all', ...years].map(year => {
+        const label = year === 'all' ? 'All' : year;
+        const isActive = year === 'all' ? ' active' : '';
+        return `<button class="year-filter-btn${isActive}" data-year="${year}">${label}</button>`;
+    });
+
+    filterContainer.innerHTML = buttons.join('');
+
+    filterContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.year-filter-btn');
+        if (!btn) return;
+
+        const selectedYear = btn.dataset.year;
+        if (selectedYear === activeYear) return;
+
+        activeYear = selectedYear;
+
+        filterContainer.querySelectorAll('.year-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filtered = selectedYear === 'all'
+            ? galleryData
+            : galleryData.filter(item => item.year === selectedYear);
+
+        const masonryGallery = document.getElementById('masonry-gallery');
+        if (!masonryGallery) return;
+
+        masonryGallery.classList.add('gallery-fade-out');
+
+        setTimeout(() => {
+            activeFilteredData = filtered;
+            renderMasonryGallery(filtered);
+            masonryGallery.classList.remove('gallery-fade-out');
+        }, 250);
+    });
 }
 
 function workItemDimensionsCm(item) {
@@ -164,8 +211,10 @@ function renderMasonryGallery(items) {
     
     if (!masonryGallery || items.length === 0) return;
     
-    masonryGallery.innerHTML = items.map((item, index) => `
-        <div class="masonry-item" data-index="${index}">
+    masonryGallery.innerHTML = items.map((item, index) => {
+        const globalIndex = galleryData.indexOf(item);
+        return `
+        <div class="masonry-item" data-index="${globalIndex}" data-filtered-index="${index}">
             <div class="masonry-item-image-wrapper">
                 <img src="images/work/${item.filename}" 
                      alt="${item.title}" 
@@ -173,20 +222,25 @@ function renderMasonryGallery(items) {
                      onerror="this.src='images/work/placeholder.jpg'">
             </div>
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 
 // =====================================================
 // Lightbox
 // =====================================================
 let currentImageIndex = 0;
+let currentFilteredIndex = 0;
+
+function getActiveData() {
+    return activeFilteredData.length ? activeFilteredData : galleryData;
+}
 
 function initLightbox() {
     const lightbox = document.getElementById('lightbox');
     
     if (!lightbox) return;
     
-    // Open lightbox when clicking gallery item
     document.addEventListener('click', (e) => {
         const galleryItem = e.target.closest('.gallery-item');
         const masonryItem = e.target.closest('.masonry-item');
@@ -196,32 +250,35 @@ function initLightbox() {
         
         if (item && item.dataset.index !== undefined) {
             currentImageIndex = parseInt(item.dataset.index);
+            currentFilteredIndex = item.dataset.filteredIndex !== undefined
+                ? parseInt(item.dataset.filteredIndex)
+                : currentImageIndex;
             openLightbox(currentImageIndex);
         }
     });
     
-    // Close lightbox
     document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
     
-    // Previous/Next navigation
     document.querySelector('.lightbox-prev')?.addEventListener('click', () => {
-        currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+        const data = getActiveData();
+        currentFilteredIndex = (currentFilteredIndex - 1 + data.length) % data.length;
+        currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
         updateLightboxImage(currentImageIndex);
     });
     
     document.querySelector('.lightbox-next')?.addEventListener('click', () => {
-        currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+        const data = getActiveData();
+        currentFilteredIndex = (currentFilteredIndex + 1) % data.length;
+        currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
         updateLightboxImage(currentImageIndex);
     });
     
-    // Close on background click
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
             closeLightbox();
         }
     });
     
-    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
         
