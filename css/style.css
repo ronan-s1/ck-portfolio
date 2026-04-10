@@ -937,6 +937,7 @@ main {
         height: 100dvh;
         -webkit-overflow-scrolling: touch;
         transition: transform 0.3s ease;
+        background: inherit;
     }
     
     #lightbox-image {
