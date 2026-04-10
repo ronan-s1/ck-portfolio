@@ -952,21 +952,7 @@ main {
     
     .lightbox-prev,
     .lightbox-next {
-        position: fixed;
-        top: auto;
-        bottom: 2rem;
-        transform: none;
-        z-index: 10001;
-    }
-    
-    .lightbox-prev {
-        left: 50%;
-        margin-left: -60px;
-    }
-    
-    .lightbox-next {
-        right: 50%;
-        margin-right: -60px;
+        display: none;
     }
     
     .lightbox-caption {
@@ -1346,12 +1332,6 @@ main {
         align-items: flex-start;
     }
     
-    .lightbox-prev,
-    .lightbox-next {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-    }
 }
 
 @media (max-width: 480px) {
