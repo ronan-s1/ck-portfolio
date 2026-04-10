@@ -296,12 +296,18 @@ function initLightbox() {
     });
 }
 
+let savedScrollY = 0;
+
 function openLightbox(index) {
     const lightbox = document.getElementById('lightbox');
     if (!lightbox || !galleryData[index]) return;
     
+    savedScrollY = window.scrollY;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.width = '100%';
     updateLightboxImage(index);
 }
 
@@ -311,6 +317,10 @@ function closeLightbox() {
     
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, savedScrollY);
 }
 
 function hexToRgb(hex) {
@@ -386,40 +396,115 @@ function updateLightboxImage(index) {
 }
 
 // =====================================================
-// Touch/Swipe Support for Lightbox
+// Touch/Swipe Support for Lightbox (Instagram-style)
 // =====================================================
 let touchStartX = 0;
-let touchEndX = 0;
+let touchStartY = 0;
+let touchCurrentX = 0;
+let isSwiping = false;
+let swipeLocked = false; // locks axis once determined
+
+function getLightboxContent() {
+    return document.querySelector('.lightbox.active .lightbox-content');
+}
 
 document.addEventListener('touchstart', (e) => {
     const lightbox = document.getElementById('lightbox');
-    if (lightbox?.classList.contains('active')) {
-        touchStartX = e.changedTouches[0].screenX;
+    if (!lightbox?.classList.contains('active')) return;
+    const content = getLightboxContent();
+    if (!content) return;
+
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchCurrentX = touchStartX;
+    isSwiping = false;
+    swipeLocked = false;
+    content.style.transition = 'none';
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox?.classList.contains('active')) return;
+    const content = getLightboxContent();
+    if (!content) return;
+
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+
+    if (!swipeLocked) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+            swipeLocked = true;
+            isSwiping = Math.abs(dx) > Math.abs(dy);
+        }
     }
-});
+
+    if (isSwiping) {
+        e.preventDefault();
+        touchCurrentX = e.touches[0].clientX;
+        const offset = touchCurrentX - touchStartX;
+        const dampened = offset * 0.6;
+        content.style.transform = `translateX(${dampened}px)`;
+        content.style.opacity = 1 - Math.min(Math.abs(offset) / 600, 0.4);
+    }
+}, { passive: false });
 
 document.addEventListener('touchend', (e) => {
     const lightbox = document.getElementById('lightbox');
-    if (lightbox?.classList.contains('active')) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }
-});
+    if (!lightbox?.classList.contains('active')) return;
+    const content = getLightboxContent();
+    if (!content) return;
 
-function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-            // Swipe left - next image
-            document.querySelector('.lightbox-next')?.click();
-        } else {
-            // Swipe right - previous image
-            document.querySelector('.lightbox-prev')?.click();
-        }
+    if (!isSwiping) {
+        content.style.transition = '';
+        content.style.transform = '';
+        content.style.opacity = '';
+        return;
     }
-}
+
+    const diff = touchCurrentX - touchStartX;
+    const swipeThreshold = 60;
+
+    if (Math.abs(diff) > swipeThreshold) {
+        const direction = diff > 0 ? -1 : 1; // -1 = prev, 1 = next
+        const flyOut = direction > 0 ? '-100%' : '100%';
+        content.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
+        content.style.transform = `translateX(${flyOut})`;
+        content.style.opacity = '0';
+
+        setTimeout(() => {
+            if (direction > 0) {
+                const data = getActiveData();
+                currentFilteredIndex = (currentFilteredIndex + 1) % data.length;
+                currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
+            } else {
+                const data = getActiveData();
+                currentFilteredIndex = (currentFilteredIndex - 1 + data.length) % data.length;
+                currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
+            }
+            updateLightboxImage(currentImageIndex);
+
+            const flyIn = direction > 0 ? '100%' : '-100%';
+            content.style.transition = 'none';
+            content.style.transform = `translateX(${flyIn})`;
+            content.style.opacity = '0';
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    content.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
+                    content.style.transform = 'translateX(0)';
+                    content.style.opacity = '1';
+                });
+            });
+        }, 250);
+    } else {
+        content.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
+        content.style.transform = 'translateX(0)';
+        content.style.opacity = '1';
+    }
+
+    isSwiping = false;
+    swipeLocked = false;
+}, { passive: true });
 
 // =====================================================
 // Contact Form
