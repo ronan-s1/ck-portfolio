@@ -922,22 +922,22 @@ main {
     .lightbox {
         align-items: flex-start;
         padding: 0;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .lightbox-content {
         flex-direction: column;
         justify-content: flex-start;
-        padding: 4rem 1.5rem 6rem 1.5rem;
-        overflow-y: auto;
-        overflow-x: hidden;
+        padding: 4rem 1.5rem 4rem 1.5rem;
         width: 100%;
         max-width: 100%;
-        height: 100vh;
-        height: 100dvh;
-        -webkit-overflow-scrolling: touch;
+        min-height: 100vh;
+        min-height: 100dvh;
         transition: transform 0.3s ease;
         background: inherit;
+        overflow: visible;
     }
     
     #lightbox-image {
