@@ -439,16 +439,20 @@ body.minimal-body .lightbox-caption .lightbox-meta {
     font-family: var(--font-secondary);
 }
 
+body.minimal-body .lightbox-caption h3 {
+    margin-left: -0.05em;
+}
+
 body.minimal-body .lightbox-meta {
-    margin: 1.25rem 0 0 0;
+    margin: 2rem 0 0 0;
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.15rem;
 }
 
 body.minimal-body .lightbox-meta__line {
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.35;
     margin: 0;
     color: var(--color-white);
 }
