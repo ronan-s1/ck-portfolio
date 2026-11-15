@@ -6,7 +6,9 @@
     "medium": "Oil on canvas and fimo clay fence",
     "dimensions_cm": "36 x 45 cm",
     "dimensions_in": "14 x 18 in",
-    "colour": "#a5723d90"
+    "colour": "#a5723d90",
+    "width": 2561,
+    "height": 2910
   },
   {
     "filename": "bicycle.jpeg",
@@ -15,7 +17,9 @@
     "medium": "Colouring pencils on fabriano",
     "dimensions_cm": "56 x 70 cm",
     "dimensions_in": "22 x 28 in",
-    "colour": "#a42f4090"
+    "colour": "#a42f4090",
+    "width": 2725,
+    "height": 3464
   },
   {
     "filename": "musical_chairs.jpeg",
@@ -24,7 +28,9 @@
     "medium": "Oil on wood",
     "dimensions_cm": "120 x 100 cm",
     "dimensions_in": "47 x 39 in",
-    "colour": "#a6678290"
+    "colour": "#a6678290",
+    "width": 2794,
+    "height": 3376
   },
   {
     "filename": "lorin.jpeg",
@@ -33,7 +39,9 @@
     "medium": "Oil on wood and paper mache frame",
     "dimensions_cm": "30 x 32.5 cm",
     "dimensions_in": "12 x 13 in",
-    "colour": "#dbb8b290"
+    "colour": "#dbb8b290",
+    "width": 2909,
+    "height": 3444
   },
   {
     "filename": "mother_and_aunt.jpeg",
@@ -42,6 +50,8 @@
     "medium": "Oil on styrofoam board",
     "dimensions_cm": "84 x 60 cm",
     "dimensions_in": "33 x 24 in",
-    "colour": "#dbb8b290"
+    "colour": "#dbb8b290",
+    "width": 2539,
+    "height": 3700
   }
 ]

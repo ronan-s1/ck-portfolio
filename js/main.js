@@ -93,7 +93,7 @@ async function initGallery() {
         target.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; padding: 3rem; max-width: 36rem; margin: 0 auto;">
                     <p style="color: #666; font-size: 1.1rem;">
-                        Could not load the gallery. Check that <code>work-data.json</code> is present, and every <code>filename</code> matches a file in <code>images/work/</code>.
+                        Could not load the gallery. Check that <code>work-data.json</code> is present, and every <code>filename</code> matches a file in <code>images/work/</code> (then run <code>npm run images</code>).
                     </p>
                     ${fileHint}
                     <p style="color: #999; font-size: 0.95rem; margin-top: 1rem;">${safe(detail)}</p>
@@ -189,10 +189,9 @@ function renderGallery(items) {
         return `
         <div class="gallery-item" data-index="${index}" data-aos="fade-up" data-aos-delay="${index * 50}">
             <div class="image-container">
-                <img src="images/work/${item.filename}" 
+                <img src="${workImageUrl(item.filename, 1200)}" 
                      alt="${item.title}" 
-                     loading="lazy"
-                     onerror="this.src='images/work/placeholder.jpg'">
+                     loading="lazy">
             </div>
             <div class="gallery-item-overlay">
                 <h3 class="gallery-item-title">${item.title}</h3>
@@ -216,14 +215,61 @@ function renderMasonryGallery(items) {
         return `
         <div class="masonry-item" data-index="${globalIndex}" data-filtered-index="${index}">
             <div class="masonry-item-image-wrapper">
-                <img src="images/work/${item.filename}" 
-                     alt="${item.title}" 
+                <img src="${workImageUrl(item.filename, 600)}"
+                     srcset="${workImageSrcset(item)}"
+                     sizes="(max-width: 640px) 100vw, (max-width: 968px) 50vw, 33vw"
+                     ${item.width && item.height ? `width="${item.width}" height="${item.height}"` : ''}
+                     alt="${escapeAttr(item.title)}"
                      loading="lazy"
-                     onerror="this.src='images/work/placeholder.jpg'">
+                     decoding="async"
+                     data-original="${escapeAttr(item.filename)}"
+                     onerror="useOriginalImage(this, this.dataset.original)">
             </div>
         </div>
     `;
     }).join('');
+}
+
+// =====================================================
+// Responsive image helpers (variants made by `npm run images`)
+// =====================================================
+function workImageUrl(filename, width) {
+    const base = filename.replace(/\.[^.]+$/, '');
+    return `images/work/opt/${base}-${width}.webp`;
+}
+
+const LIGHTBOX_SIZES = '(max-width: 968px) 100vw, 72vh';
+
+// Variants are never upscaled, so a "-2000" file from a narrower original is only item.width wide.
+function workImageSrcset(item) {
+    return [600, 1200, 2000]
+        .map(w => `${workImageUrl(item.filename, w)} ${item.width ? Math.min(w, item.width) : w}w`)
+        .join(', ');
+}
+
+function useOriginalImage(img, filename) {
+    img.onerror = null;
+    img.removeAttribute('srcset');
+    img.src = `images/work/${filename}`;
+}
+
+function escapeAttr(s) {
+    return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function preloadNeighbours(index) {
+    const data = getActiveData();
+    const pos = data.indexOf(galleryData[index]);
+    if (pos < 0) return;
+    [1, -1].forEach(step => {
+        const n = data[(pos + step + data.length) % data.length];
+        if (n) {
+            const img = new Image();
+            img.sizes = LIGHTBOX_SIZES;
+            img.srcset = workImageSrcset(n);
+            img.src = workImageUrl(n.filename, 1200);
+        }
+    });
 }
 
 // =====================================================
@@ -379,13 +425,12 @@ function updateLightboxImage(index) {
     }
     
     if (lightboxImage) {
-        lightboxImage.src = `images/work/${item.filename}`;
+        lightboxImage.onerror = () => useOriginalImage(lightboxImage, item.filename);
+        lightboxImage.sizes = LIGHTBOX_SIZES;
+        lightboxImage.srcset = workImageSrcset(item);
+        lightboxImage.src = workImageUrl(item.filename, 1200);
         lightboxImage.alt = item.title;
-        
-        // Handle image load error
-        lightboxImage.onerror = () => {
-            lightboxImage.src = 'images/work/placeholder.jpg';
-        };
+        preloadNeighbours(index);
     }
     
     if (lightboxTitle) lightboxTitle.textContent = item.title || '';

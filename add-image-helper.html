@@ -148,8 +148,9 @@
         
         <div class="notice">
             <strong>Note:</strong> This tool helps you generate the JSON code you need to add to 
-            <code>gallery-data.json</code>. After generating, copy the code and paste it into your 
-            gallery-data.json file.
+            <code>work-data.json</code>. After generating, copy the code and paste it into your
+            work-data.json file, put the original in <code>images/work/</code>, then run <code>npm run images</code>
+            to generate the web-sized versions.
         </div>
         
         <form id="imageForm">
@@ -192,7 +193,7 @@
         <div id="output" class="output">
             <h2>Generated JSON Code</h2>
             <p style="margin-bottom: 1rem; color: #666;">
-                Copy this code and add it to your <code>gallery-data.json</code> file:
+                Copy this code and add it to your <code>work-data.json</code> file, then run <code>npm run images</code>:
             </p>
             <pre id="jsonOutput"></pre>
             <button type="button" class="copy-button" onclick="copyToClipboard()">
