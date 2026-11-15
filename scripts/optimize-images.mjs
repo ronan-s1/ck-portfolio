@@ -1,5 +1,6 @@
 // Generates responsive WebP variants and records intrinsic sizes in work-data.json.
-// Usage: npm run images
+// Usage: npm run images            (only converts new or changed originals)
+//        npm run images -- --force (reconverts everything)
 import sharp from 'sharp';
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -8,22 +9,46 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const WORK_WIDTHS = [600, 1200, 2000];
 const QUALITY = 80;
+const force = process.argv.includes('--force');
+
+async function mtime(file) {
+    try {
+        return (await stat(file)).mtimeMs;
+    } catch {
+        return 0;
+    }
+}
+
+async function displayedSize(srcPath) {
+    const { width, height, orientation } = await sharp(srcPath).metadata();
+    // EXIF orientations 5-8 are rotated 90°, so browsers show them with width and height swapped.
+    return orientation >= 5 ? { width: height, height: width } : { width, height };
+}
 
 async function makeVariants(srcPath, outDir, widths) {
     await mkdir(outDir, { recursive: true });
     const base = path.basename(srcPath, path.extname(srcPath));
-    // Apply EXIF rotation first so reported dimensions match what browsers show.
-    const rotated = await sharp(srcPath).rotate().toBuffer({ resolveWithObject: true });
-    const { width, height } = rotated.info;
+    const outputs = widths.map(w => path.join(outDir, `${base}-${w}.webp`));
+    const { width, height } = await displayedSize(srcPath);
+
+    const srcTime = await mtime(srcPath);
+    const upToDate = (await Promise.all(outputs.map(mtime))).every(t => t >= srcTime);
+    if (upToDate && !force) {
+        console.log(`${base}: up to date`);
+        return { width, height };
+    }
+
     if (width < Math.max(...widths)) {
         console.warn(`${base}: source is only ${width}px wide; larger variants will not be upscaled`);
     }
     let total = 0;
-    for (const w of widths) {
-        const target = Math.min(w, width);
-        const out = path.join(outDir, `${base}-${w}.webp`);
-        await sharp(rotated.data).resize({ width: target, withoutEnlargement: true }).webp({ quality: QUALITY }).toFile(out);
-        total += (await stat(out)).size;
+    for (const [i, w] of widths.entries()) {
+        await sharp(srcPath)
+            .rotate()
+            .resize({ width: Math.min(w, width), withoutEnlargement: true })
+            .webp({ quality: QUALITY })
+            .toFile(outputs[i]);
+        total += (await stat(outputs[i])).size;
     }
     console.log(`${base}: ${width}x${height} -> ${(total / 1024).toFixed(0)} KB across ${widths.length} sizes`);
     return { width, height };

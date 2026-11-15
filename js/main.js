@@ -214,7 +214,7 @@ function renderMasonryGallery(items) {
         const globalIndex = galleryData.indexOf(item);
         return `
         <div class="masonry-item" data-index="${globalIndex}" data-filtered-index="${index}">
-            <div class="masonry-item-image-wrapper">
+            <div class="masonry-item-image-wrapper"${/^#[0-9a-f]{6,8}$/i.test(item.colour || '') ? ` style="background-color: ${item.colour}"` : ''}>
                 <img src="${workImageUrl(item.filename, 600)}"
                      srcset="${workImageSrcset(item)}"
                      sizes="(max-width: 640px) 100vw, (max-width: 968px) 50vw, 33vw"
