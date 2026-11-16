@@ -830,7 +830,7 @@ main {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: var(--color-white);
     z-index: 2000;
     align-items: center;
     justify-content: center;
@@ -846,7 +846,7 @@ main {
     max-height: 90vh;
     display: flex;
     gap: var(--spacing-md);
-    align-items: flex-start;
+    align-items: flex-end;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -858,16 +858,16 @@ main {
 }
 
 .lightbox-caption {
-    color: var(--color-white);
+    color: var(--color-text);
     max-width: 450px;
     max-height: 85vh;
-    padding: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-md) 0;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
 .lightbox-caption h3 {
-    color: var(--color-white);
+    color: var(--color-text);
     font-size: 1.75rem;
     margin-bottom: var(--spacing-sm);
 }
@@ -884,23 +884,23 @@ main {
 }
 
 .lightbox-caption::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
 }
 
 .lightbox-caption::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 4px;
 }
 
 .lightbox-caption::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 /* Firefox scrollbar */
 .lightbox-caption {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
 }
 
 .lightbox-close,
@@ -909,7 +909,7 @@ main {
     position: absolute;
     background: transparent;
     border: none;
-    color: var(--color-white);
+    color: var(--color-text);
     font-size: 2rem;
     cursor: pointer;
     width: 50px;
@@ -956,6 +956,7 @@ main {
     .lightbox-content {
         flex-direction: column;
         justify-content: flex-start;
+        align-items: flex-start;
         padding: 4rem 1.5rem 4rem 1.5rem;
         width: 100%;
         max-width: 100%;

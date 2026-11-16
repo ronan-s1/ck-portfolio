@@ -454,7 +454,7 @@ body.minimal-body .lightbox-meta__line {
     font-size: 0.95rem;
     line-height: 1.35;
     margin: 0;
-    color: var(--color-white);
+    color: var(--color-text);
 }
 
 /* =====================================================
@@ -598,13 +598,19 @@ body.minimal-body .lightbox-meta__line {
     width: 100%;
     aspect-ratio: 1 / 1;
     background-color: transparent;
-    box-sizing: border-box;
+}
+
+.masonry-item-image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     border: 2.2px solid transparent;
+    pointer-events: none;
     transition: border-color 0.3s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .masonry-item:hover .masonry-item-image-wrapper {
+    .masonry-item:hover .masonry-item-image-wrapper::after {
         border-color: var(--color-warm);
     }
 }

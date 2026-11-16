@@ -214,7 +214,7 @@ function renderMasonryGallery(items) {
         const globalIndex = galleryData.indexOf(item);
         return `
         <div class="masonry-item" data-index="${globalIndex}" data-filtered-index="${index}">
-            <div class="masonry-item-image-wrapper"${/^#[0-9a-f]{6,8}$/i.test(item.colour || '') ? ` style="background-color: ${item.colour}"` : ''}>
+            <div class="masonry-item-image-wrapper">
                 <img src="${workImageUrl(item.filename, 600)}"
                      srcset="${workImageSrcset(item)}"
                      sizes="(max-width: 640px) 100vw, (max-width: 968px) 50vw, 33vw"
@@ -369,60 +369,16 @@ function closeLightbox() {
     window.scrollTo(0, savedScrollY);
 }
 
-function hexToRgb(hex) {
-    // Remove # if present
-    hex = hex.replace('#', '');
-    
-    // Handle 8-digit hex (with alpha) or 6-digit hex
-    let r, g, b;
-    if (hex.length === 8) {
-        // 8-digit hex: RRGGBBAA
-        r = parseInt(hex.substring(0, 2), 16);
-        g = parseInt(hex.substring(2, 4), 16);
-        b = parseInt(hex.substring(4, 6), 16);
-    } else if (hex.length === 6) {
-        // 6-digit hex: RRGGBB
-        r = parseInt(hex.substring(0, 2), 16);
-        g = parseInt(hex.substring(2, 4), 16);
-        b = parseInt(hex.substring(4, 6), 16);
-    } else {
-        // Fallback to black
-        return { r: 0, g: 0, b: 0 };
-    }
-    
-    return { r, g, b };
-}
-
-function darkenColor(rgb, factor = 0.3) {
-    // Darken by reducing each RGB value by the factor
-    return {
-        r: Math.max(0, Math.floor(rgb.r * factor)),
-        g: Math.max(0, Math.floor(rgb.g * factor)),
-        b: Math.max(0, Math.floor(rgb.b * factor))
-    };
-}
-
 function updateLightboxImage(index) {
     const item = galleryData[index];
     if (!item) return;
     
-    const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
     const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxYear = document.getElementById('lightbox-year');
     const lightboxMedium = document.getElementById('lightbox-medium');
     const lightboxDimCm = document.getElementById('lightbox-dim-cm');
     const lightboxDimIn = document.getElementById('lightbox-dim-in');
-    
-    // Set lightbox background color based on item's colour field
-    if (lightbox && item.colour) {
-        const rgb = hexToRgb(item.colour);
-        const darkened = darkenColor(rgb, 0.19); // Darken to 19% of original brightness
-        lightbox.style.background = `rgb(${darkened.r}, ${darkened.g}, ${darkened.b})`;
-    } else if (lightbox) {
-        // Fallback to black if no color specified
-        lightbox.style.background = 'rgb(0, 0, 0)';
-    }
     
     if (lightboxImage) {
         lightboxImage.onerror = () => useOriginalImage(lightboxImage, item.filename);
