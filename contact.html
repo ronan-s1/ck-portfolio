@@ -26,7 +26,14 @@
         <!-- Desktop menu -->
         <div class="minimal-menu d-none d-md-flex">
             <a href="index.html">Home</a>
-            <a href="work.html">Work</a>
+            <div class="nav-dropdown">
+                <a href="work.html" class="nav-dropdown-toggle" aria-haspopup="true">Works</a>
+                <div class="nav-dropdown-menu">
+                    <a href="work.html?type=paintings">Paintings</a>
+                    <a href="work.html?type=paper">Works on Paper</a>
+                    <a href="work.html?type=exhibitions">Exhibitions</a>
+                </div>
+            </div>
             <a href="about.html">About</a>
             <a href="cv.html">CV</a>
             <a href="contact.html">Contact</a>
@@ -44,7 +51,16 @@
         <div class="offcanvas-body">
             <nav class="nav flex-column">
                 <a class="nav-link" href="index.html">Home</a>
-                <a class="nav-link" href="work.html">Work</a>
+                <div class="nav-subgroup">
+                    <button class="nav-link nav-subgroup-title collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#worksSubnav" aria-expanded="false" aria-controls="worksSubnav">Works</button>
+                    <div class="collapse" id="worksSubnav">
+                        <div class="nav-subgroup-links">
+                            <a class="nav-link nav-sublink" href="work.html?type=paintings">Paintings</a>
+                            <a class="nav-link nav-sublink" href="work.html?type=paper">Works on Paper</a>
+                            <a class="nav-link nav-sublink" href="work.html?type=exhibitions">Exhibitions</a>
+                        </div>
+                    </div>
+                </div>
                 <a class="nav-link" href="about.html">About</a>
                 <a class="nav-link" href="cv.html">CV</a>
                 <a class="nav-link" href="contact.html">Contact</a>
@@ -62,13 +78,13 @@
 
             <div style="margin-bottom: 4rem;">
                 <p><strong>Email</strong><br>
-                <a href="mailto:clarissakellyartist@gmail.com" style="color: #666;">clarissakellyartist@gmail.com</a></p>
+                <a class="contact-link" href="mailto:clarissakellyartist@gmail.com">clarissakellyartist@gmail.com</a></p>
                 
                 <p style="margin-top: 2rem;"><strong>Location</strong><br>
                 <span style="color: #666;">Laois, Ireland</span></p>
                 
                 <p style="margin-top: 2rem;"><strong>Instagram</strong><br>
-                <a href="https://instagram.com/Clarissakellyart/" style="color: #666;" target="_blank" rel="noopener noreferrer">@clarissakellyart</a></p>
+                <a class="contact-link" href="https://instagram.com/Clarissakellyart/" target="_blank" rel="noopener noreferrer">@clarissakellyart</a></p>
             </div>
         </section>
     </main>

@@ -23,11 +23,6 @@ let cursorY = 0;
 let followerX = 0;
 let followerY = 0;
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
 function animateCursor() {
     // Smooth cursor movement
     const speed = 0.2;
@@ -48,7 +43,14 @@ function animateCursor() {
     
     requestAnimationFrame(animateCursor);
 }
-animateCursor();
+
+if (cursor || cursorFollower) {
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    animateCursor();
+}
 
 // Cursor hover effects
 document.querySelectorAll('a, button, .grid-item, .masonry-item').forEach(el => {

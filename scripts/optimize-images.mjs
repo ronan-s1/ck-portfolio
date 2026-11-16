@@ -2,12 +2,12 @@
 // Usage: npm run images            (only converts new or changed originals)
 //        npm run images -- --force (reconverts everything)
 import sharp from 'sharp';
-import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, stat, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const WORK_WIDTHS = [600, 1200, 2000];
+const WORK_WIDTHS = [600, 900, 1200, 2000];
 const QUALITY = 80;
 const force = process.argv.includes('--force');
 
@@ -67,6 +67,11 @@ for (const item of items) {
     item.height = dims.height;
 }
 await writeFile(dataPath, JSON.stringify(items, null, 2) + '\n');
+
+const exhibitionsDir = path.join(root, 'images/exhibitions');
+for (const file of (await readdir(exhibitionsDir)).filter(f => /\.(jpe?g|png)$/i.test(f))) {
+    await makeVariants(path.join(exhibitionsDir, file), path.join(exhibitionsDir, 'opt'), WORK_WIDTHS);
+}
 
 // About page image is only 1170px wide, so cap its variants there.
 await makeVariants(

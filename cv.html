@@ -26,7 +26,14 @@
         <!-- Desktop menu -->
         <div class="minimal-menu d-none d-md-flex">
             <a href="index.html">Home</a>
-            <a href="work.html">Work</a>
+            <div class="nav-dropdown">
+                <a href="work.html" class="nav-dropdown-toggle" aria-haspopup="true">Works</a>
+                <div class="nav-dropdown-menu">
+                    <a href="work.html?type=paintings">Paintings</a>
+                    <a href="work.html?type=paper">Works on Paper</a>
+                    <a href="work.html?type=exhibitions">Exhibitions</a>
+                </div>
+            </div>
             <a href="about.html">About</a>
             <a href="cv.html">CV</a>
             <a href="contact.html">Contact</a>
@@ -44,7 +51,16 @@
         <div class="offcanvas-body">
             <nav class="nav flex-column">
                 <a class="nav-link" href="index.html">Home</a>
-                <a class="nav-link" href="work.html">Work</a>
+                <div class="nav-subgroup">
+                    <button class="nav-link nav-subgroup-title collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#worksSubnav" aria-expanded="false" aria-controls="worksSubnav">Works</button>
+                    <div class="collapse" id="worksSubnav">
+                        <div class="nav-subgroup-links">
+                            <a class="nav-link nav-sublink" href="work.html?type=paintings">Paintings</a>
+                            <a class="nav-link nav-sublink" href="work.html?type=paper">Works on Paper</a>
+                            <a class="nav-link nav-sublink" href="work.html?type=exhibitions">Exhibitions</a>
+                        </div>
+                    </div>
+                </div>
                 <a class="nav-link" href="about.html">About</a>
                 <a class="nav-link" href="cv.html">CV</a>
                 <a class="nav-link" href="contact.html">Contact</a>
@@ -63,6 +79,18 @@
                         <a href="mailto:clarissakellyartist@gmail.com">clarissakellyartist@gmail.com</a>
                         <a href="https://instagram.com/clarissakellyart" target="_blank" rel="noopener noreferrer">@clarissakellyart</a>
                     </p>
+                </div>
+            </div>
+
+            <div class="cv-section-minimal">
+                <h2>Solo Exhibitions</h2>
+                <div class="cv-section-body">
+                    <div class="cv-row">
+                        <div class="cv-row-year">2026</div>
+                        <ul class="cv-row-items">
+                            <li><span class="cv-title">Let Loose!</span><span class="cv-venue">Clancy Quay Studios, Dublin</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -136,7 +164,7 @@
                     <div class="cv-row">
                         <div class="cv-row-year">2025</div>
                         <ul class="cv-row-items">
-                            <li><span class="cv-title">State Art Collection of Ireland, OPW</span><span class="cv-venue"><em>Summer</em></span></li>
+                            <li><span class="cv-title">State Art Collection of Ireland, OPW</span><span class="cv-venue"><em>Summer 2025</em></span></li>
                         </ul>
                     </div>
                 </div>

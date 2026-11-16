@@ -9,12 +9,45 @@ document.addEventListener('DOMContentLoaded', () => {
         yearElement.textContent = new Date().getFullYear();
     }
     
+    initNavState();
     initMobileMenu();
     initScrollAnimations();
     initGallery();
     initLightbox();
     initContactForm();
 });
+
+// =====================================================
+// Current page / section in the nav
+// =====================================================
+function initNavState() {
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const type = new URLSearchParams(window.location.search).get('type');
+
+    document.querySelectorAll('.minimal-menu a, .offcanvas-body a').forEach(link => {
+        const url = new URL(link.getAttribute('href'), window.location.href);
+        const linkPage = url.pathname.split('/').pop() || 'index.html';
+        if (linkPage !== page) return;
+        if (page !== 'work.html') {
+            link.setAttribute('aria-current', 'page');
+        } else if (link.classList.contains('nav-dropdown-toggle')) {
+            link.classList.add('is-current');
+            if (!type) link.setAttribute('aria-current', 'page');
+        } else if (type && url.searchParams.get('type') === type) {
+            link.setAttribute('aria-current', 'page');
+        }
+    });
+
+    if (page === 'work.html') {
+        const worksToggle = document.querySelector('.offcanvas-body .nav-subgroup-title');
+        worksToggle?.classList.add('is-current');
+        if (type && worksToggle) {
+            worksToggle.classList.remove('collapsed');
+            worksToggle.setAttribute('aria-expanded', 'true');
+            document.getElementById('worksSubnav')?.classList.add('show');
+        }
+    }
+}
 
 // =====================================================
 // Mobile Navigation
@@ -101,12 +134,38 @@ async function initGallery() {
             `;
     };
 
+    const workType = new URLSearchParams(window.location.search).get('type');
+    if (masonryGallery) {
+        const labels = { paintings: 'Paintings', paper: 'Works on Paper', exhibitions: 'Exhibitions' };
+        if (!labels[workType]) {
+            document.getElementById('work-landing')?.removeAttribute('hidden');
+            document.getElementById('work-year-filter')?.setAttribute('hidden', '');
+            return;
+        }
+        document.title = `${labels[workType]} | Clarissa Kelly`;
+        const heading = document.getElementById('work-heading');
+        if (heading) {
+            heading.textContent = labels[workType];
+            heading.removeAttribute('hidden');
+        }
+        if (workType === 'exhibitions') {
+            document.getElementById('work-exhibitions')?.removeAttribute('hidden');
+            document.getElementById('work-year-filter')?.setAttribute('hidden', '');
+            masonryGallery.innerHTML = '';
+            return;
+        }
+    }
+
     try {
         const response = await fetch('work-data.json');
         if (!response.ok) {
             throw new Error('work-data.json returned HTTP ' + response.status);
         }
         galleryData = await response.json();
+        if (!Array.isArray(galleryData)) throw new Error('work-data.json is not a list');
+        if (masonryGallery) {
+            galleryData = galleryData.filter(item => item.category === (workType === 'paper' ? 'paper' : 'paintings'));
+        }
 
         if (!Array.isArray(galleryData) || galleryData.length === 0) {
             showGalleryError('Gallery list is empty.');
@@ -185,7 +244,7 @@ function renderGallery(items) {
     if (!galleryGrid || items.length === 0) return;
     
     galleryGrid.innerHTML = items.map((item, index) => {
-        const metaLine = [item.year, item.medium, workItemDimensionsCm(item)].filter(Boolean).join(' · ');
+        const metaLine = [item.medium, workItemDimensionsCm(item)].filter(Boolean).join(' · ');
         return `
         <div class="gallery-item" data-index="${index}" data-aos="fade-up" data-aos-delay="${index * 50}">
             <div class="image-container">
@@ -194,7 +253,7 @@ function renderGallery(items) {
                      loading="lazy">
             </div>
             <div class="gallery-item-overlay">
-                <h3 class="gallery-item-title">${item.title}</h3>
+                <h3 class="gallery-item-title"><em>${item.title}</em>${item.year ? ', ' + item.year : ''}</h3>
                 <p class="gallery-item-info">${metaLine}</p>
             </div>
         </div>
@@ -212,15 +271,16 @@ function renderMasonryGallery(items) {
     
     masonryGallery.innerHTML = items.map((item, index) => {
         const globalIndex = galleryData.indexOf(item);
+        const eager = index < GALLERY_EAGER_COUNT;
         return `
-        <div class="masonry-item" data-index="${globalIndex}" data-filtered-index="${index}">
+        <div class="masonry-item" role="button" tabindex="0" aria-label="${escapeAttr(item.title + (item.year ? ', ' + item.year : ''))}" data-index="${globalIndex}" data-filtered-index="${index}"${item.width && item.height ? ` style="--ar:${(item.width / item.height).toFixed(4)}"` : ''}>
             <div class="masonry-item-image-wrapper">
                 <img src="${workImageUrl(item.filename, 600)}"
                      srcset="${workImageSrcset(item)}"
-                     sizes="(max-width: 640px) 100vw, (max-width: 968px) 50vw, 33vw"
+                     sizes="${gallerySizes(item)}"
                      ${item.width && item.height ? `width="${item.width}" height="${item.height}"` : ''}
                      alt="${escapeAttr(item.title)}"
-                     loading="lazy"
+                     loading="${eager ? 'eager' : 'lazy'}"
                      decoding="async"
                      data-original="${escapeAttr(item.filename)}"
                      onerror="useOriginalImage(this, this.dataset.original)">
@@ -238,11 +298,34 @@ function workImageUrl(filename, width) {
     return `images/work/opt/${base}-${width}.webp`;
 }
 
-const LIGHTBOX_SIZES = '(max-width: 968px) 100vw, 72vh';
+// Roughly one desktop row; later rows stay lazy.
+const GALLERY_EAGER_COUNT = 4;
+
+function aspectRatio(item) {
+    return item.width && item.height ? item.width / item.height : 1;
+}
+
+// Mirrors .masonry-gallery: full width (minus 1.5rem padding) up to 640px, otherwise
+// up to 1.1 × aspect ratio × --row-height (340px up to 968px, 440px above).
+function gallerySizes(item) {
+    const ar = aspectRatio(item);
+    return `(max-width: 640px) calc(100vw - 3rem), (max-width: 968px) ${Math.round(ar * 374)}px, ${Math.round(ar * 484)}px`;
+}
+
+// Mirrors #lightbox-image: 70vw × 85vh on desktop, content width × 55vh on mobile, letterboxed by aspect ratio.
+function lightboxSizes(item) {
+    const ar = aspectRatio(item);
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const width = window.matchMedia('(max-width: 968px)').matches
+        ? Math.min(vw - 48, vh * 0.55 * ar)
+        : Math.min(vw * 0.7, vh * 0.85 * ar);
+    return `${Math.round(width)}px`;
+}
 
 // Variants are never upscaled, so a "-2000" file from a narrower original is only item.width wide.
 function workImageSrcset(item) {
-    return [600, 1200, 2000]
+    return [600, 900, 1200, 2000]
         .map(w => `${workImageUrl(item.filename, w)} ${item.width ? Math.min(w, item.width) : w}w`)
         .join(', ');
 }
@@ -258,14 +341,16 @@ function escapeAttr(s) {
 }
 
 function preloadNeighbours(index) {
+    if (navigator.connection?.saveData) return;
     const data = getActiveData();
     const pos = data.indexOf(galleryData[index]);
     if (pos < 0) return;
     [1, -1].forEach(step => {
         const n = data[(pos + step + data.length) % data.length];
-        if (n) {
+        if (n && n !== galleryData[index]) {
             const img = new Image();
-            img.sizes = LIGHTBOX_SIZES;
+            img.fetchPriority = 'low';
+            img.sizes = lightboxSizes(n);
             img.srcset = workImageSrcset(n);
             img.src = workImageUrl(n.filename, 1200);
         }
@@ -303,6 +388,14 @@ function initLightbox() {
         }
     });
     
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const item = e.target.closest?.('.masonry-item');
+        if (!item) return;
+        e.preventDefault();
+        item.click();
+    });
+
     document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
     
     document.querySelector('.lightbox-prev')?.addEventListener('click', () => {
@@ -328,6 +421,24 @@ function initLightbox() {
     document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
         
+        if (e.key === 'Tab') {
+            const focusable = [...lightbox.querySelectorAll('button')].filter(b => b.offsetParent !== null);
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            } else if (!lightbox.contains(document.activeElement)) {
+                e.preventDefault();
+                first.focus();
+            }
+            return;
+        }
+
         switch(e.key) {
             case 'Escape':
                 closeLightbox();
@@ -343,18 +454,21 @@ function initLightbox() {
 }
 
 let savedScrollY = 0;
+let focusBeforeLightbox = null;
 
 function openLightbox(index) {
     const lightbox = document.getElementById('lightbox');
     if (!lightbox || !galleryData[index]) return;
     
     savedScrollY = window.scrollY;
+    focusBeforeLightbox = document.activeElement;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.top = `-${savedScrollY}px`;
     document.body.style.width = '100%';
     updateLightboxImage(index);
+    lightbox.querySelector('.lightbox-close')?.focus({ preventScroll: true });
 }
 
 function closeLightbox() {
@@ -367,6 +481,8 @@ function closeLightbox() {
     document.body.style.top = '';
     document.body.style.width = '';
     window.scrollTo(0, savedScrollY);
+    focusBeforeLightbox?.focus?.({ preventScroll: true });
+    focusBeforeLightbox = null;
 }
 
 function updateLightboxImage(index) {
@@ -375,25 +491,36 @@ function updateLightboxImage(index) {
     
     const lightboxImage = document.getElementById('lightbox-image');
     const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxYear = document.getElementById('lightbox-year');
     const lightboxMedium = document.getElementById('lightbox-medium');
     const lightboxDimCm = document.getElementById('lightbox-dim-cm');
     const lightboxDimIn = document.getElementById('lightbox-dim-in');
     
     if (lightboxImage) {
         lightboxImage.onerror = () => useOriginalImage(lightboxImage, item.filename);
-        lightboxImage.sizes = LIGHTBOX_SIZES;
+        lightboxImage.onload = () => {
+            lightboxImage.onload = null;
+            preloadNeighbours(index);
+        };
+        lightboxImage.sizes = lightboxSizes(item);
         lightboxImage.srcset = workImageSrcset(item);
         lightboxImage.src = workImageUrl(item.filename, 1200);
         lightboxImage.alt = item.title;
-        preloadNeighbours(index);
     }
     
-    if (lightboxTitle) lightboxTitle.textContent = item.title || '';
-    if (lightboxYear) lightboxYear.textContent = item.year != null && item.year !== '' ? String(item.year) : 'TBD';
-    if (lightboxMedium) lightboxMedium.textContent = item.medium || 'TBD';
-    if (lightboxDimCm) lightboxDimCm.textContent = workItemDimensionsCm(item);
-    if (lightboxDimIn) lightboxDimIn.textContent = workItemDimensionsIn(item);
+    if (lightboxTitle) {
+        const em = document.createElement('em');
+        em.textContent = item.title || '';
+        lightboxTitle.replaceChildren(em, item.year ? `, ${item.year}` : '');
+    }
+    const counter = document.getElementById('lightbox-counter');
+    if (counter) {
+        const data = getActiveData();
+        const pos = data.indexOf(item);
+        counter.textContent = pos >= 0 && data.length > 1 ? `${pos + 1} / ${data.length}` : '';
+    }
+    if (lightboxMedium) lightboxMedium.textContent = item.medium || '';
+    if (lightboxDimCm) lightboxDimCm.textContent = item.dimensions_cm || item.dimensions || '';
+    if (lightboxDimIn) lightboxDimIn.textContent = item.dimensions_in || '';
 }
 
 // =====================================================

@@ -26,7 +26,14 @@
         <!-- Desktop menu -->
         <div class="minimal-menu d-none d-md-flex">
             <a href="index.html">Home</a>
-            <a href="work.html">Work</a>
+            <div class="nav-dropdown">
+                <a href="work.html" class="nav-dropdown-toggle" aria-haspopup="true">Works</a>
+                <div class="nav-dropdown-menu">
+                    <a href="work.html?type=paintings">Paintings</a>
+                    <a href="work.html?type=paper">Works on Paper</a>
+                    <a href="work.html?type=exhibitions">Exhibitions</a>
+                </div>
+            </div>
             <a href="about.html">About</a>
             <a href="cv.html">CV</a>
             <a href="contact.html">Contact</a>
@@ -44,7 +51,16 @@
         <div class="offcanvas-body">
             <nav class="nav flex-column">
                 <a class="nav-link" href="index.html">Home</a>
-                <a class="nav-link" href="work.html">Work</a>
+                <div class="nav-subgroup">
+                    <button class="nav-link nav-subgroup-title collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#worksSubnav" aria-expanded="false" aria-controls="worksSubnav">Works</button>
+                    <div class="collapse" id="worksSubnav">
+                        <div class="nav-subgroup-links">
+                            <a class="nav-link nav-sublink" href="work.html?type=paintings">Paintings</a>
+                            <a class="nav-link nav-sublink" href="work.html?type=paper">Works on Paper</a>
+                            <a class="nav-link nav-sublink" href="work.html?type=exhibitions">Exhibitions</a>
+                        </div>
+                    </div>
+                </div>
                 <a class="nav-link" href="about.html">About</a>
                 <a class="nav-link" href="cv.html">CV</a>
                 <a class="nav-link" href="contact.html">Contact</a>
@@ -60,7 +76,7 @@
                 </div>
                 <div class="about-text-minimal">
                     <h1>About</h1>
-                    <p>Clarissa Kelly is a Filipino-Irish artist based in Laois, Ireland. She graduated from NCAD in 2025, specialising in painting. Through portraiture, her work explores cultural dialogue and human connection, brought together through the use of flatness, colour, and collage.</p>
+                    <p>Clarissa Kelly is a Filipino-Irish artist based in Laois, Ireland. She graduated from NCAD in 2025, specialising in painting.</p>
                 </div>
             </div>
         </section>
