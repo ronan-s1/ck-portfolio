@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initScrollAnimations();
     initGallery();
+    initExhibitionCarousels();
     initLightbox();
     initContactForm();
 });
@@ -230,6 +231,49 @@ function renderYearFilter(items) {
     });
 }
 
+// =====================================================
+// Exhibition carousels - click a photo to open that exhibition in the lightbox
+// =====================================================
+let exhibitionView = null;
+
+function initExhibitionCarousels() {
+    document.querySelectorAll('.exhibition-carousel').forEach(carousel => {
+        const inner = carousel.querySelector('.carousel-inner');
+        inner?.addEventListener('click', () => {
+            const photos = [...inner.querySelectorAll('.carousel-item img')];
+            const index = [...inner.querySelectorAll('.carousel-item')].findIndex(i => i.classList.contains('active'));
+            const header = carousel.closest('.exhibition')?.querySelector('.exhibition-header');
+            exhibitionView = {
+                carousel,
+                photos,
+                index: Math.max(index, 0),
+                title: header?.querySelector('.exhibition-title'),
+                meta: header?.querySelector('.exhibition-meta')?.textContent || '',
+            };
+            openLightboxView(renderExhibitionPhoto);
+        });
+    });
+}
+
+function renderExhibitionPhoto() {
+    const { photos, index, title, meta } = exhibitionView;
+    const photo = photos[index];
+    const lightboxImage = document.getElementById('lightbox-image');
+    if (lightboxImage) {
+        lightboxImage.onerror = null;
+        lightboxImage.onload = null;
+        lightboxImage.sizes = lightboxSizes({ width: +photo.getAttribute('width'), height: +photo.getAttribute('height') });
+        lightboxImage.srcset = photo.srcset;
+        lightboxImage.src = photo.getAttribute('src');
+        lightboxImage.alt = photo.alt;
+    }
+    document.getElementById('lightbox-title')?.replaceChildren(...[...(title?.childNodes || [])].map(n => n.cloneNode(true)));
+    document.getElementById('lightbox-medium').textContent = meta;
+    document.getElementById('lightbox-dim-cm').textContent = '';
+    document.getElementById('lightbox-dim-in').textContent = '';
+    document.getElementById('lightbox-counter').textContent = photos.length > 1 ? `${index + 1} / ${photos.length}` : '';
+}
+
 function workItemDimensionsCm(item) {
     return item.dimensions_cm || item.dimensions || 'TBD';
 }
@@ -312,15 +356,17 @@ function gallerySizes(item) {
     return `(max-width: 640px) calc(100vw - 3rem), (max-width: 968px) ${Math.round(ar * 374)}px, ${Math.round(ar * 484)}px`;
 }
 
-// Mirrors #lightbox-image: 70vw × 85vh on desktop, content width × 55vh on mobile, letterboxed by aspect ratio.
+// Mirrors #lightbox-image: (viewport − arrows − caption column) × 85vh on desktop,
+// content width × 55vh on mobile, letterboxed by aspect ratio.
 function lightboxSizes(item) {
     const ar = aspectRatio(item);
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const width = window.matchMedia('(max-width: 968px)').matches
-        ? Math.min(vw - 48, vh * 0.55 * ar)
-        : Math.min(vw * 0.7, vh * 0.85 * ar);
-    return `${Math.round(width)}px`;
+    if (window.matchMedia('(max-width: 968px)').matches) {
+        return `${Math.round(Math.min(vw - 48, vh * 0.55 * ar))}px`;
+    }
+    const captionW = Math.min(Math.max(208, vw * 0.2), 320);
+    return `${Math.round(Math.min(vw - 192 - captionW - 32, vh * 0.85 * ar))}px`;
 }
 
 // Variants are never upscaled, so a "-2000" file from a narrower original is only item.width wide.
@@ -398,19 +444,8 @@ function initLightbox() {
 
     document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
     
-    document.querySelector('.lightbox-prev')?.addEventListener('click', () => {
-        const data = getActiveData();
-        currentFilteredIndex = (currentFilteredIndex - 1 + data.length) % data.length;
-        currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
-        updateLightboxImage(currentImageIndex);
-    });
-    
-    document.querySelector('.lightbox-next')?.addEventListener('click', () => {
-        const data = getActiveData();
-        currentFilteredIndex = (currentFilteredIndex + 1) % data.length;
-        currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
-        updateLightboxImage(currentImageIndex);
-    });
+    document.querySelector('.lightbox-prev')?.addEventListener('click', () => stepLightbox(-1));
+    document.querySelector('.lightbox-next')?.addEventListener('click', () => stepLightbox(1));
     
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
@@ -422,6 +457,7 @@ function initLightbox() {
         if (!lightbox.classList.contains('active')) return;
         
         if (e.key === 'Tab') {
+            lightbox.classList.remove('opened-by-pointer');
             const focusable = [...lightbox.querySelectorAll('button')].filter(b => b.offsetParent !== null);
             if (!focusable.length) return;
             const first = focusable[0];
@@ -456,9 +492,34 @@ function initLightbox() {
 let savedScrollY = 0;
 let focusBeforeLightbox = null;
 
+function stepLightbox(step) {
+    if (exhibitionView) {
+        const count = exhibitionView.photos.length;
+        exhibitionView.index = (exhibitionView.index + step + count) % count;
+        renderExhibitionPhoto();
+        return;
+    }
+    const data = getActiveData();
+    currentFilteredIndex = (currentFilteredIndex + step + data.length) % data.length;
+    currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
+    updateLightboxImage(currentImageIndex);
+}
+
+// Opening with a mouse/touch hides the close button's focus ring; opening with the keyboard keeps it.
+let lastInputWasKeyboard = false;
+document.addEventListener('keydown', () => { lastInputWasKeyboard = true; }, true);
+document.addEventListener('pointerdown', () => { lastInputWasKeyboard = false; }, true);
+document.addEventListener('mousedown', () => { lastInputWasKeyboard = false; }, true);
+
 function openLightbox(index) {
+    if (!galleryData[index]) return;
+    exhibitionView = null;
+    openLightboxView(() => updateLightboxImage(index));
+}
+
+function openLightboxView(render) {
     const lightbox = document.getElementById('lightbox');
-    if (!lightbox || !galleryData[index]) return;
+    if (!lightbox) return;
     
     savedScrollY = window.scrollY;
     focusBeforeLightbox = document.activeElement;
@@ -467,7 +528,8 @@ function openLightbox(index) {
     document.body.style.position = 'fixed';
     document.body.style.top = `-${savedScrollY}px`;
     document.body.style.width = '100%';
-    updateLightboxImage(index);
+    render();
+    lightbox.classList.toggle('opened-by-pointer', !lastInputWasKeyboard);
     lightbox.querySelector('.lightbox-close')?.focus({ preventScroll: true });
 }
 
@@ -483,6 +545,10 @@ function closeLightbox() {
     window.scrollTo(0, savedScrollY);
     focusBeforeLightbox?.focus?.({ preventScroll: true });
     focusBeforeLightbox = null;
+    if (exhibitionView && window.bootstrap) {
+        bootstrap.Carousel.getOrCreateInstance(exhibitionView.carousel).to(exhibitionView.index);
+    }
+    exhibitionView = null;
 }
 
 function updateLightboxImage(index) {
@@ -600,16 +666,7 @@ document.addEventListener('touchend', (e) => {
         content.style.opacity = '0';
 
         setTimeout(() => {
-            if (direction > 0) {
-                const data = getActiveData();
-                currentFilteredIndex = (currentFilteredIndex + 1) % data.length;
-                currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
-            } else {
-                const data = getActiveData();
-                currentFilteredIndex = (currentFilteredIndex - 1 + data.length) % data.length;
-                currentImageIndex = galleryData.indexOf(data[currentFilteredIndex]);
-            }
-            updateLightboxImage(currentImageIndex);
+            stepLightbox(direction);
 
             const flyIn = direction > 0 ? '100%' : '-100%';
             content.style.transition = 'none';

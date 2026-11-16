@@ -317,6 +317,7 @@
 .exhibition-carousel .carousel-inner {
     aspect-ratio: 4 / 3;
     background: #efedea;
+    cursor: zoom-in;
 }
 
 .exhibition-carousel .carousel-item img {
@@ -771,6 +772,33 @@ body.minimal-body .lightbox-meta__line {
     line-height: 1.35;
     margin: 0;
     color: var(--color-text);
+}
+
+body.minimal-body .lightbox.opened-by-pointer .lightbox-close:focus-visible {
+    outline: none;
+}
+
+/* Desktop: reserve a fixed caption column so wide works can't squeeze it.
+   12rem keeps clear of the prev/next arrows; keep in sync with lightboxSizes() in main.js. */
+@media (min-width: 969px) {
+    body.minimal-body .lightbox {
+        --lightbox-caption-w: clamp(13rem, 20vw, 20rem);
+    }
+
+    body.minimal-body .lightbox-content {
+        max-width: calc(100vw - 12rem);
+    }
+
+    body.minimal-body #lightbox-image {
+        max-width: calc(100vw - 12rem - var(--lightbox-caption-w) - 2rem);
+        min-width: 0;
+    }
+
+    body.minimal-body .lightbox-caption {
+        flex: 0 0 var(--lightbox-caption-w);
+        max-width: none;
+        padding: 0;
+    }
 }
 
 /* =====================================================
