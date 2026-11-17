@@ -1300,6 +1300,14 @@ img[loading="lazy"].loaded {
     text-transform: uppercase;
 }
 
+/* Desktop: shrink the page to its widest line so the dividers end where the text does */
+@media (min-width: 769px) {
+    .cv-minimal {
+        width: fit-content;
+        max-width: min(1100px, 100%);
+    }
+}
+
 .cv-section-minimal {
     display: grid;
     grid-template-columns: 15rem 1fr;
