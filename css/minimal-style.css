@@ -66,6 +66,12 @@
     object-fit: contain;
 }
 
+@media (max-width: 767.98px) {
+    .minimal-logo-signature {
+        max-width: min(60vw, 14rem);
+    }
+}
+
 @media (min-width: 768px) {
     .minimal-logo-signature {
         max-height: 2.35rem;
@@ -295,6 +301,7 @@
 
 .exhibition-header {
     margin-bottom: 1.25rem;
+    padding: 0 3rem; /* match the carousel gutters so text lines up with the photo */
 }
 
 .exhibition-title {
@@ -312,6 +319,11 @@
     letter-spacing: 0.04em;
     color: var(--color-text-light, #666);
     margin: 0;
+}
+
+.exhibition-carousel {
+    /* Gutters either side so the arrows sit outside the photo */
+    padding: 0 3rem;
 }
 
 .exhibition-carousel .carousel-inner {
@@ -334,15 +346,15 @@
     /* Centre on the photo, not the photo plus the indicator row beneath it */
     top: calc(50% - 1.15rem);
     bottom: auto;
-    width: 44px;
+    width: 2.5rem;
     height: 44px;
-    margin: 0 1rem;
+    margin: 0;
     transform: translateY(-50%);
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--minimal-page-bg, #fafafa) 88%, transparent);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    background: none;
+    border: 0;
+    box-shadow: none;
     color: var(--color-text);
-    opacity: 0.85;
+    opacity: 0.7;
     transition: opacity 0.2s ease, color 0.2s ease;
 }
 
@@ -391,9 +403,12 @@
 
     .exhibition-carousel .carousel-control-prev,
     .exhibition-carousel .carousel-control-next {
-        width: 36px;
-        height: 36px;
-        margin: 0 0.5rem;
+        width: 1.75rem;
+    }
+
+    .exhibition-carousel,
+    .exhibition-header {
+        padding: 0 1.75rem;
     }
 }
 
@@ -983,6 +998,79 @@ body.minimal-body .lightbox.opened-by-pointer .lightbox-close:focus-visible {
     opacity: 1;
 }
 
+/* Menu close button is drawn as the hamburger (same size and spot as .navbar-toggler),
+   so as the menu fades in its lines fold into an X, and unfold again on close */
+.offcanvas .offcanvas-header .btn-close {
+    --menu-icon-color: var(--color-text);
+    position: relative;
+    box-sizing: content-box;
+    width: 25px;
+    height: 18px;
+    padding: 0.5rem;
+    margin: 0 0 0 auto;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(var(--menu-icon-color), var(--menu-icon-color)) center / 100% 2px no-repeat content-box;
+    opacity: 1;
+    filter: none;
+    transition: background-size 0.3s ease;
+}
+
+.offcanvas .offcanvas-header .btn-close::before,
+.offcanvas .offcanvas-header .btn-close::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    height: 2px;
+    background-color: var(--menu-icon-color);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.offcanvas .offcanvas-header .btn-close::before {
+    top: 0.5rem;
+}
+
+.offcanvas .offcanvas-header .btn-close::after {
+    bottom: 0.5rem;
+}
+
+.offcanvas.showing .offcanvas-header .btn-close,
+.offcanvas.show:not(.hiding) .offcanvas-header .btn-close {
+    background-size: 0 2px;
+}
+
+.offcanvas.showing .offcanvas-header .btn-close::before,
+.offcanvas.show:not(.hiding) .offcanvas-header .btn-close::before {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.offcanvas.showing .offcanvas-header .btn-close::after,
+.offcanvas.show:not(.hiding) .offcanvas-header .btn-close::after {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.offcanvas .offcanvas-header .btn-close:hover {
+    --menu-icon-color: #a42f40;
+}
+
+.offcanvas .offcanvas-header .btn-close:focus {
+    box-shadow: none;
+}
+
+.offcanvas .offcanvas-header .btn-close:focus-visible {
+    outline: 1px solid #a42f40;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .offcanvas .offcanvas-header .btn-close,
+    .offcanvas .offcanvas-header .btn-close::before,
+    .offcanvas .offcanvas-header .btn-close::after {
+        transition: none;
+    }
+}
+
 /* =====================================================
    WORK PAGE - Year filter
    ===================================================== */
@@ -1375,6 +1463,10 @@ img[loading="lazy"].loaded {
     .offcanvas-signature-mark {
         max-height: 2.75rem;
     }
+
+    .offcanvas .offcanvas-header {
+        padding: 1.5rem 2rem;
+    }
     
     .minimal-menu {
         gap: 2rem;
@@ -1486,12 +1578,13 @@ img[loading="lazy"].loaded {
         letter-spacing: 0.1em;
     }
     
-    .minimal-logo-signature {
-        max-height: 1.55rem;
-    }
-    
+    .minimal-logo-signature,
     .offcanvas-signature-mark {
         max-height: 2.5rem;
+    }
+
+    .offcanvas .offcanvas-header {
+        padding: 1.25rem 1.5rem;
     }
     
     .minimal-menu {
@@ -1633,12 +1726,13 @@ img[loading="lazy"].loaded {
         font-size: 0.8rem;
     }
     
-    .minimal-logo-signature {
-        max-height: 1.4rem;
-    }
-    
+    .minimal-logo-signature,
     .offcanvas-signature-mark {
         max-height: 2.35rem;
+    }
+
+    .offcanvas .offcanvas-header {
+        padding: 1rem 1.5rem;
     }
     
     .minimal-menu {
@@ -1744,6 +1838,13 @@ body.loaded {
     }
     to {
         opacity: 1;
+    }
+}
+
+/* Large phones: nav logo matches the menu's logo (smaller breakpoints set both together) */
+@media (min-width: 641px) and (max-width: 767.98px) {
+    .minimal-logo-signature {
+        max-height: 2.75rem;
     }
 }
 

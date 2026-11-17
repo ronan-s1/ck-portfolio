@@ -923,7 +923,7 @@ main {
 .lightbox-close:hover,
 .lightbox-prev:hover,
 .lightbox-next:hover {
-    opacity: 0.7;
+    color: #a42f40;
 }
 
 .lightbox-close {
