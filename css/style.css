@@ -1015,15 +1015,15 @@ main {
 
     .lightbox-prev,
     .lightbox-next {
+        /* Pinned bottom corners; the caption reserves space below its text so they never cover it */
         position: fixed;
         top: auto;
-        bottom: 1.25rem;
+        bottom: 1rem;
         transform: none;
         width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: color-mix(in srgb, var(--color-white, #fff) 88%, transparent);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        height: 50px;
+        background: none;
+        box-shadow: none;
         z-index: 10001;
     }
 
@@ -1047,7 +1047,7 @@ main {
         max-width: 100%;
         max-height: none;
         overflow-y: visible;
-        padding: 0 0 2rem 0;
+        padding: 0 0 5.5rem 0;
         flex-shrink: 0;
     }
     
